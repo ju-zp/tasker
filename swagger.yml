@@ -4,7 +4,6 @@ info:
   description: as in title
   title: Just a Todo
   version: 1.0.0
-paths: {}
 produces:
 - application/json
 schemes:
@@ -43,4 +42,53 @@ definitions:
         readOnly: true
       done:
         type: boolean
+#
+paths:
+  /ping:
+    get:
+      responses:
+        200:
+          description: server is operational
+          schema:
+            type: string
+            description: Server is up
+        500:
+          description: server is not responding
+          schema:
+            type: string
+            description: Server is down
+  /todo:
+    get:
+      responses:
+        200:
+          description: Get all todos
+          schema:
+            type: array
+            description: array of all the todos
+            items:
+              $ref: "#/definitions/todo"
+        400:
+          description: Incomplete data
+          schema:
+            type: string
+            description: Body of the request was Incomplete
+    post:
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: '#/definitions/todo'
+      responses:
+        200:
+          description: Created
+          schema:
+            $ref: "#/definitions/todo"
+        400:
+          description: Incomplete data
+          schema:
+            type: string
+            description: Body of the request was Incomplete
+  
+
+
 
