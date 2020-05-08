@@ -1,9 +1,18 @@
 FROM golang:1.13-alpine
 
-WORKDIR /go/src/tasker
+RUN apk update && apk add --no-cache git
+
+WORKDIR /app
+
+COPY go.mod go.sum ./
+
+RUN go mod download
+
 COPY . .
 
-RUN go get -d -v ./...
-RUN go install -v ./...
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -o main ./cmd/tasker-server/main.go
 
-CMD ["tasker"]
+
+EXPOSE 3000
+
+CMD [ "bin/app"]

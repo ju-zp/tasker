@@ -3,8 +3,11 @@ package main
 import (
 	"flag"
 	"log"
+	"os"
+	"strconv"
 
 	"github.com/go-openapi/loads"
+	"github.com/joho/godotenv"
 	"github.com/ju-zp/tasker/gen/restapi"
 	"github.com/ju-zp/tasker/gen/restapi/operations"
 	"github.com/ju-zp/tasker/svc/pinghandlers"
@@ -15,7 +18,10 @@ import (
 
 func main() {
 
-	var portFlag = flag.Int("port", 3000, "Port to run this service on")
+	port := os.Getenv("PORT")
+	i, err := strconv.Atoi(port)
+
+	var portFlag = flag.Int(":", i, "Port to run this service on")
 
 	// load embedded swagger file
 	swaggerSpec, err := loads.Analyzed(restapi.SwaggerJSON, "")
@@ -42,4 +48,11 @@ func main() {
 		log.Fatalln(err)
 	}
 
+}
+
+func init() {
+	// loads values from .env into the system
+	if err := godotenv.Load(); err != nil {
+		log.Print("No .env file found")
+	}
 }
