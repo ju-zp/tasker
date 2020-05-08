@@ -1,9 +1,9 @@
-FROM golang:1.13
+FROM golang:1.13-alpine
 
-WORKDIR /go/src/app
+WORKDIR /go/src/tasker
 COPY . .
 
 RUN go get -d -v ./...
 RUN go install -v ./...
 
-CMD ["app"]
+CMD ["tasker"]
