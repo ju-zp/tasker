@@ -6,4 +6,4 @@ services:
     volumes:
       - .:/go/src/tasker
     working_dir: /go/src/tasker
-    command: go run main.go
+    command: go run main.go 
