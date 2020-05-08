@@ -10,7 +10,7 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 
-	"tasker/restapi/operations"
+	"github.com/ju-zp/tasker/restapi/operations"
 )
 
 //go:generate swagger generate server --target ../../tasker --name Tasker --spec ../swagger.yml

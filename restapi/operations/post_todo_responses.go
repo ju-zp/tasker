@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	"tasker/models"
+	"github.com/ju-zp/tasker/models"
 )
 
 // PostTodoOKCode is the HTTP code returned for type PostTodoOK
