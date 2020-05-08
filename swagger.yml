@@ -1,0 +1,46 @@
+consumes:
+- application/json
+info:
+  description: as in title
+  title: Just a Todo
+  version: 1.0.0
+paths: {}
+produces:
+- application/json
+schemes:
+- http
+swagger: "2.0"
+#
+definitions:
+  todo:
+    type: object
+    required:
+      - taskId
+      - todo
+      - done
+    properties:
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+      taskId:
+        type: integer
+        format: int64
+        description: "task it is associated with"
+      todo:
+        type: string
+        description: "the content of the todo"
+      done:
+        type: boolean
+  task:
+    type: object
+    required:
+      - done
+    properties:
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+      done:
+        type: boolean
+
