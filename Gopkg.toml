@@ -22,7 +22,7 @@
 
 [metadata.heroku]
   root-package = "github.com/ju-zp/tasker"
-  go-version = "go1.13"
+  go-version = "go1.13.0"
   install = [ "./..." ]
 
 
