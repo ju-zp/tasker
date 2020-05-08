@@ -46,6 +46,7 @@ definitions:
 paths:
   /ping:
     get:
+      operationId: getPing
       responses:
         200:
           description: server is operational
