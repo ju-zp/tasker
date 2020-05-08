@@ -20,6 +20,12 @@
 #  name = "github.com/x/y"
 #  version = "2.4.0"
 
+[metadata.heroku]
+  root-package = "github.com/ju-zp/tasker"
+  go-version = "go1.13"
+  install = [ "./cmd/tasker-server/" ]
+  ensure = "false"
+
 
 [[constraint]]
   name = "github.com/go-openapi/errors"
