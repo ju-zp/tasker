@@ -3,6 +3,8 @@ package tests
 import "testing"
 
 func Test_simple(t *testing.T) {
+
+	api.operations
 	if false {
 		t.Fatal("Expected true to not be false")
 	}
