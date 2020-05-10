@@ -10,10 +10,10 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 
-	"github.com/ju-zp/tasker/gen/restapi/operations"
+	"github.com/ju-zp/tasker/svc/restapi/operations"
 )
 
-//go:generate swagger generate server --target ../../gen --name Tasker --spec ../../swagger.yml --model-package ./svc/models --skip-models --exclude-main
+//go:generate swagger generate server --target ../../svc --name Tasker --spec ../../swagger.yml --model-package ../svc/models --skip-models --exclude-main
 
 func configureFlags(api *operations.TaskerAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }

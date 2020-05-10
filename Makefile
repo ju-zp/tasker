@@ -13,4 +13,4 @@ run-dev:
 	docker-compose up
 
 swagger:
-	$(swagger) generate server -t gen --exclude-main --skip-models -m ../svc/models -A tasker
+	$(swagger) generate server -t svc --exclude-main --skip-models -m ../svc/models -A tasker
