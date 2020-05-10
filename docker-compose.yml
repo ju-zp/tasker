@@ -6,4 +6,21 @@ services:
     volumes:
       - .:/go/src/tasker
     working_dir: /go/src/tasker
-    command: go run cmd/tasker-server/main.go 
+    command: go run cmd/tasker-server/main.go
+    ports:
+      - 3000:3000
+    environment:
+      DBHOST: postgres
+      DBPORT: 5432
+      DBUSER: postgres
+      DBPASS: root
+      DBNAME: tasker
+    depends_on:
+      - postgres
+
+  postgres:
+    image: "postgres:11"
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: root
+      POSTGRES_DB: image_scraper
