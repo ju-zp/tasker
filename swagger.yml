@@ -60,6 +60,7 @@ paths:
             description: Server is down
   /todo:
     get:
+      operationId: getTodos
       responses:
         200:
           description: Get all todos
@@ -74,6 +75,7 @@ paths:
             type: string
             description: Body of the request was Incomplete
     post:
+      operationId: createTodo
       parameters:
         - name: body
           in: body
