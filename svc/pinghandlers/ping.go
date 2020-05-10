@@ -4,7 +4,7 @@ import (
 	"fmt"
 
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/ju-zp/tasker/gen/restapi/operations"
+	"github.com/ju-zp/tasker/svc/restapi/operations"
 )
 
 // GetPing returns the status of the server

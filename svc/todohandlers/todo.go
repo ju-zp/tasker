@@ -4,11 +4,12 @@ import (
 	"fmt"
 
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/ju-zp/tasker/gen/restapi/operations"
+	"github.com/ju-zp/tasker/svc/restapi/operations"
 )
 
 // GetTodos gets all todos
 func GetTodos(params operations.GetTodosParams) middleware.Responder {
+
 	fmt.Println("here")
 	return operations.NewGetTodosOK()
 }
