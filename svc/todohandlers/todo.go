@@ -8,13 +8,13 @@ import (
 )
 
 // GetTodos gets all todos
-func GetTodos(params *operations.GetTodoParams) middleware.Responder {
+func GetTodos(params operations.GetTodosParams) middleware.Responder {
 	fmt.Println("here")
-	return operations.NewGetTodoOK()
+	return operations.NewGetTodosOK()
 }
 
 // CreateTodo makes a new todo entry in db
-func CreateTodo(params *operations.PostTodoParams) middleware.Responder {
+func CreateTodo(params operations.CreateTodoParams) middleware.Responder {
 	fmt.Println("or here")
-	return operations.NewPostTodoOK()
+	return operations.NewCreateTodoOK()
 }

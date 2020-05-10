@@ -41,14 +41,14 @@ func NewTaskerAPI(spec *loads.Document) *TaskerAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
-		GetTodoHandler: GetTodoHandlerFunc(func(params GetTodoParams) middleware.Responder {
-			return middleware.NotImplemented("operation GetTodo has not yet been implemented")
-		}),
-		PostTodoHandler: PostTodoHandlerFunc(func(params PostTodoParams) middleware.Responder {
-			return middleware.NotImplemented("operation PostTodo has not yet been implemented")
+		CreateTodoHandler: CreateTodoHandlerFunc(func(params CreateTodoParams) middleware.Responder {
+			return middleware.NotImplemented("operation CreateTodo has not yet been implemented")
 		}),
 		GetPingHandler: GetPingHandlerFunc(func(params GetPingParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetPing has not yet been implemented")
+		}),
+		GetTodosHandler: GetTodosHandlerFunc(func(params GetTodosParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetTodos has not yet been implemented")
 		}),
 	}
 }
@@ -83,12 +83,12 @@ type TaskerAPI struct {
 	//   - application/json
 	JSONProducer runtime.Producer
 
-	// GetTodoHandler sets the operation handler for the get todo operation
-	GetTodoHandler GetTodoHandler
-	// PostTodoHandler sets the operation handler for the post todo operation
-	PostTodoHandler PostTodoHandler
+	// CreateTodoHandler sets the operation handler for the create todo operation
+	CreateTodoHandler CreateTodoHandler
 	// GetPingHandler sets the operation handler for the get ping operation
 	GetPingHandler GetPingHandler
+	// GetTodosHandler sets the operation handler for the get todos operation
+	GetTodosHandler GetTodosHandler
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
 	ServeError func(http.ResponseWriter, *http.Request, error)
@@ -155,14 +155,14 @@ func (o *TaskerAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
-	if o.GetTodoHandler == nil {
-		unregistered = append(unregistered, "GetTodoHandler")
-	}
-	if o.PostTodoHandler == nil {
-		unregistered = append(unregistered, "PostTodoHandler")
+	if o.CreateTodoHandler == nil {
+		unregistered = append(unregistered, "CreateTodoHandler")
 	}
 	if o.GetPingHandler == nil {
 		unregistered = append(unregistered, "GetPingHandler")
+	}
+	if o.GetTodosHandler == nil {
+		unregistered = append(unregistered, "GetTodosHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -252,18 +252,18 @@ func (o *TaskerAPI) initHandlerCache() {
 		o.handlers = make(map[string]map[string]http.Handler)
 	}
 
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/todo"] = NewGetTodo(o.context, o.GetTodoHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/todo"] = NewPostTodo(o.context, o.PostTodoHandler)
+	o.handlers["POST"]["/todo"] = NewCreateTodo(o.context, o.CreateTodoHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/ping"] = NewGetPing(o.context, o.GetPingHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/todo"] = NewGetTodos(o.context, o.GetTodosHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

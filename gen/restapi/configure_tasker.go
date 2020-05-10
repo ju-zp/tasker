@@ -33,14 +33,14 @@ func configureAPI(api *operations.TaskerAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	if api.GetTodoHandler == nil {
-		api.GetTodoHandler = operations.GetTodoHandlerFunc(func(params operations.GetTodoParams) middleware.Responder {
-			return middleware.NotImplemented("operation operations.GetTodo has not yet been implemented")
+	if api.GetTodosHandler == nil {
+		api.GetTodosHandler = operations.GetTodosHandlerFunc(func(params operations.GetTodosParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.GetTodos has not yet been implemented")
 		})
 	}
-	if api.PostTodoHandler == nil {
-		api.PostTodoHandler = operations.PostTodoHandlerFunc(func(params operations.PostTodoParams) middleware.Responder {
-			return middleware.NotImplemented("operation operations.PostTodo has not yet been implemented")
+	if api.CreateTodoHandler == nil {
+		api.CreateTodoHandler = operations.CreateTodoHandlerFunc(func(params operations.CreateTodoParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.CreateTodo has not yet been implemented")
 		})
 	}
 	if api.GetPingHandler == nil {

@@ -57,6 +57,7 @@ func init() {
     },
     "/todo": {
       "get": {
+        "operationId": "getTodos",
         "responses": {
           "200": {
             "description": "Get all todos",
@@ -78,6 +79,7 @@ func init() {
         }
       },
       "post": {
+        "operationId": "createTodo",
         "parameters": [
           {
             "name": "body",
@@ -191,6 +193,7 @@ func init() {
     },
     "/todo": {
       "get": {
+        "operationId": "getTodos",
         "responses": {
           "200": {
             "description": "Get all todos",
@@ -212,6 +215,7 @@ func init() {
         }
       },
       "post": {
+        "operationId": "createTodo",
         "parameters": [
           {
             "name": "body",

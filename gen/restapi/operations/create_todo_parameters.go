@@ -15,18 +15,18 @@ import (
 	"github.com/ju-zp/tasker/gen/models"
 )
 
-// NewPostTodoParams creates a new PostTodoParams object
+// NewCreateTodoParams creates a new CreateTodoParams object
 // no default values defined in spec.
-func NewPostTodoParams() PostTodoParams {
+func NewCreateTodoParams() CreateTodoParams {
 
-	return PostTodoParams{}
+	return CreateTodoParams{}
 }
 
-// PostTodoParams contains all the bound params for the post todo operation
+// CreateTodoParams contains all the bound params for the create todo operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters postTodo
-type PostTodoParams struct {
+// swagger:parameters createTodo
+type CreateTodoParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
@@ -40,8 +40,8 @@ type PostTodoParams struct {
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
 // for simple values it will use straight method calls.
 //
-// To ensure default values, the struct must have been initialized with NewPostTodoParams() beforehand.
-func (o *PostTodoParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
+// To ensure default values, the struct must have been initialized with NewCreateTodoParams() beforehand.
+func (o *CreateTodoParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
 
 	o.HTTPRequest = r

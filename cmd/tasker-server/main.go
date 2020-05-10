@@ -6,6 +6,8 @@ import (
 	"os"
 	"strconv"
 
+	"github.com/ju-zp/tasker/svc/todohandlers"
+
 	"github.com/go-openapi/loads"
 	"github.com/joho/godotenv"
 	"github.com/ju-zp/tasker/gen/restapi"
@@ -42,6 +44,9 @@ func main() {
 
 	// TODO: Set Handle
 	api.GetPingHandler = operations.GetPingHandlerFunc(pinghandlers.GetPing)
+
+	api.GetTodosHandler = operations.GetTodosHandlerFunc(todohandlers.GetTodos)
+	api.CreateTodoHandler = operations.CreateTodoHandlerFunc(todohandlers.CreateTodo)
 
 	// serve API
 	if err := server.Serve(); err != nil {
