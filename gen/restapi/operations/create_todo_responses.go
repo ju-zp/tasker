@@ -10,7 +10,7 @@ import (
 
 	"github.com/go-openapi/runtime"
 
-	"github.com/ju-zp/tasker/gen/models"
+	"github.com/ju-zp/tasker/svc/models"
 )
 
 // CreateTodoOKCode is the HTTP code returned for type CreateTodoOK

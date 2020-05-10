@@ -19,6 +19,7 @@ require (
 	github.com/go-openapi/validate v0.19.8
 	github.com/go-stack/stack v1.8.0
 	github.com/jessevdk/go-flags v1.4.0
+	github.com/jinzhu/gorm v1.9.12 // indirect
 	github.com/joho/godotenv v1.3.0
 	github.com/mailru/easyjson v0.7.1
 	github.com/mitchellh/mapstructure v1.3.0
