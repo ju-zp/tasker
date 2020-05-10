@@ -13,7 +13,7 @@ import (
 	"github.com/ju-zp/tasker/gen/restapi/operations"
 )
 
-//go:generate swagger generate server --target ../../gen --name Tasker --spec ../../swagger.yml --exclude-main
+//go:generate swagger generate server --target ../../gen --name Tasker --spec ../../swagger.yml --model-package ./svc/models --skip-models --exclude-main
 
 func configureFlags(api *operations.TaskerAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
@@ -33,11 +33,6 @@ func configureAPI(api *operations.TaskerAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
-	if api.GetTodosHandler == nil {
-		api.GetTodosHandler = operations.GetTodosHandlerFunc(func(params operations.GetTodosParams) middleware.Responder {
-			return middleware.NotImplemented("operation operations.GetTodos has not yet been implemented")
-		})
-	}
 	if api.CreateTodoHandler == nil {
 		api.CreateTodoHandler = operations.CreateTodoHandlerFunc(func(params operations.CreateTodoParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.CreateTodo has not yet been implemented")
@@ -46,6 +41,11 @@ func configureAPI(api *operations.TaskerAPI) http.Handler {
 	if api.GetPingHandler == nil {
 		api.GetPingHandler = operations.GetPingHandlerFunc(func(params operations.GetPingParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.GetPing has not yet been implemented")
+		})
+	}
+	if api.GetTodosHandler == nil {
+		api.GetTodosHandler = operations.GetTodosHandlerFunc(func(params operations.GetTodosParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.GetTodos has not yet been implemented")
 		})
 	}
 
