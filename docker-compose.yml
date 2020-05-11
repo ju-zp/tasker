@@ -10,6 +10,7 @@ services:
     ports:
       - 3000:3000
     environment:
+      PORT: 3000
       DBHOST: postgres
       DBPORT: 5432
       DBUSER: postgres

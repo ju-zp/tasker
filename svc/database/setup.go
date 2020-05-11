@@ -1,11 +1,16 @@
-package models
+package database
 
 import (
-	"os"
+"os"
 
-	"github.com/jinzhu/gorm"
-	_ "github.com/jinzhu/gorm/dialects/postgres"
+"github.com/jinzhu/gorm"
+_ "github.com/jinzhu/gorm/dialects/postgres"
 )
+
+type Database struct {
+	DB *gorm.DB
+}
+
 
 // InitDB sets up db and runs migrations
 func InitDB() *gorm.DB {
@@ -14,7 +19,17 @@ func InitDB() *gorm.DB {
 		panic("Failed to connect to database!")
 	}
 
+	database := Database{
+		DB: db,
+	}
+
+	database.RunMigrations()
 	return db
+}
+
+func (database Database)RunMigrations() {
+	database.CreateTaskTable()
+	database.CreateTodoTable()
 }
 
 func createDbString() string {
@@ -26,3 +41,4 @@ func createDbString() string {
 
 	return "host=" + host + " port=" + port + " user=" + user + " dbname=" + name + " password=" + pass + " sslmode=disable"
 }
+
