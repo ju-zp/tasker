@@ -32,12 +32,15 @@ definitions:
   task:
     type: object
     required:
-      - done
+      - title
     properties:
       id:
         type: integer
         format: int64
         readOnly: true
+      title:
+        type: string
+        description: "title of a task"
       done:
         type: boolean
 #
@@ -56,6 +59,39 @@ paths:
           schema:
             type: string
             description: Server is down
+  /task:
+    get:
+      operationId: getTasks
+      responses:
+        200:
+          description: Get all the tasks
+          schema:
+            type: array
+            description: array of all the tasks
+            items:
+              $ref: "#/definitions/task"
+        400:
+          description: Incomplete data
+          schema:
+            type: string
+            description: Body of the request was incomplete
+    post:
+      operationId: createTask
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/task"
+      responses:
+        200:
+          description: Created task
+          schema:
+            $ref: "#/definitions/task"
+        400:
+          description: Incomplete data
+          schema:
+            type: string
+            description: Body of the request was Incomplete
   /todo:
     get:
       operationId: getTodos
@@ -81,7 +117,7 @@ paths:
             $ref: '#/definitions/todo'
       responses:
         200:
-          description: Created
+          description: Created todo
           schema:
             $ref: "#/definitions/todo"
         400:
