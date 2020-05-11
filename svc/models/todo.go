@@ -15,29 +15,18 @@ type Todo struct {
 	gorm.Model
 
 	// done
-	// Required: true
 	Done *bool `json:"done"`
 
 	// task it is associated with
-	// Required: true
 	TaskID *int64 `json:"taskId"`
 
 	// the content of the todo
-	// Required: true
 	Todo *string `json:"todo"`
 }
 
 // Validate validates this todo
 func (m *Todo) Validate(formats strfmt.Registry) error {
 	var res []error
-
-	if err := m.validateDone(formats); err != nil {
-		res = append(res, err)
-	}
-
-	if err := m.validateTaskID(formats); err != nil {
-		res = append(res, err)
-	}
 
 	if err := m.validateTodo(formats); err != nil {
 		res = append(res, err)
@@ -46,24 +35,6 @@ func (m *Todo) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
-	return nil
-}
-
-func (m *Todo) validateDone(formats strfmt.Registry) error {
-
-	if err := validate.Required("done", "body", m.Done); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func (m *Todo) validateTaskID(formats strfmt.Registry) error {
-
-	if err := validate.Required("taskId", "body", m.TaskID); err != nil {
-		return err
-	}
-
 	return nil
 }
 

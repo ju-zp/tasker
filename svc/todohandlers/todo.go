@@ -2,6 +2,7 @@ package todohandlers
 
 import (
 	"fmt"
+	"github.com/go-openapi/swag"
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/ju-zp/tasker/svc/restapi/operations"
@@ -16,6 +17,6 @@ func GetTodos(params operations.GetTodosParams) middleware.Responder {
 
 // CreateTodo makes a new todo entry in db
 func CreateTodo(params operations.CreateTodoParams) middleware.Responder {
-	fmt.Println("or here")
+	fmt.Println(swag.StringValue(params.Body.Todo))
 	return operations.NewCreateTodoOK()
 }

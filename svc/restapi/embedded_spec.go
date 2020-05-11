@@ -127,9 +127,7 @@ func init() {
     "todo": {
       "type": "object",
       "required": [
-        "taskId",
-        "todo",
-        "done"
+        "todo"
       ],
       "properties": {
         "done": {
@@ -263,9 +261,7 @@ func init() {
     "todo": {
       "type": "object",
       "required": [
-        "taskId",
-        "todo",
-        "done"
+        "todo"
       ],
       "properties": {
         "done": {

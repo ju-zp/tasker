@@ -14,9 +14,7 @@ definitions:
   todo:
     type: object
     required:
-      - taskId
       - todo
-      - done
     properties:
       id:
         type: integer
