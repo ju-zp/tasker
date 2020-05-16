@@ -55,6 +55,57 @@ func init() {
         }
       }
     },
+    "/task": {
+      "get": {
+        "operationId": "getTasks",
+        "responses": {
+          "200": {
+            "description": "Get all the tasks",
+            "schema": {
+              "description": "array of all the tasks",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/task"
+              }
+            }
+          },
+          "400": {
+            "description": "Incomplete data",
+            "schema": {
+              "description": "Body of the request was incomplete",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createTask",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/task"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created task",
+            "schema": {
+              "$ref": "#/definitions/task"
+            }
+          },
+          "400": {
+            "description": "Incomplete data",
+            "schema": {
+              "description": "Body of the request was Incomplete",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "/todo": {
       "get": {
         "operationId": "getTodos",
@@ -91,7 +142,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Created",
+            "description": "Created todo",
             "schema": {
               "$ref": "#/definitions/todo"
             }
@@ -111,7 +162,7 @@ func init() {
     "task": {
       "type": "object",
       "required": [
-        "done"
+        "title"
       ],
       "properties": {
         "done": {
@@ -121,15 +172,17 @@ func init() {
           "type": "integer",
           "format": "int64",
           "readOnly": true
+        },
+        "title": {
+          "description": "title of a task",
+          "type": "string"
         }
       }
     },
     "todo": {
       "type": "object",
       "required": [
-        "taskId",
-        "todo",
-        "done"
+        "todo"
       ],
       "properties": {
         "done": {
@@ -191,6 +244,57 @@ func init() {
         }
       }
     },
+    "/task": {
+      "get": {
+        "operationId": "getTasks",
+        "responses": {
+          "200": {
+            "description": "Get all the tasks",
+            "schema": {
+              "description": "array of all the tasks",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/task"
+              }
+            }
+          },
+          "400": {
+            "description": "Incomplete data",
+            "schema": {
+              "description": "Body of the request was incomplete",
+              "type": "string"
+            }
+          }
+        }
+      },
+      "post": {
+        "operationId": "createTask",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/task"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Created task",
+            "schema": {
+              "$ref": "#/definitions/task"
+            }
+          },
+          "400": {
+            "description": "Incomplete data",
+            "schema": {
+              "description": "Body of the request was Incomplete",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "/todo": {
       "get": {
         "operationId": "getTodos",
@@ -227,7 +331,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Created",
+            "description": "Created todo",
             "schema": {
               "$ref": "#/definitions/todo"
             }
@@ -247,7 +351,7 @@ func init() {
     "task": {
       "type": "object",
       "required": [
-        "done"
+        "title"
       ],
       "properties": {
         "done": {
@@ -257,15 +361,17 @@ func init() {
           "type": "integer",
           "format": "int64",
           "readOnly": true
+        },
+        "title": {
+          "description": "title of a task",
+          "type": "string"
         }
       }
     },
     "todo": {
       "type": "object",
       "required": [
-        "taskId",
-        "todo",
-        "done"
+        "todo"
       ],
       "properties": {
         "done": {

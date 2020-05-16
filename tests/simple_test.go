@@ -1,9 +1,13 @@
 package tests
 
-import "testing"
+import (
+	"fmt"
+	"testing"
+)
 
 func Test_simple(t *testing.T) {
-if false {
+	fmt.Print("Success")
+	if false {
 		t.Fatal("Expected true to not be false")
 	}
 	t.Log("True is true")

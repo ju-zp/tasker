@@ -16,7 +16,7 @@ import (
 // CreateTodoOKCode is the HTTP code returned for type CreateTodoOK
 const CreateTodoOKCode int = 200
 
-/*CreateTodoOK Created
+/*CreateTodoOK Created todo
 
 swagger:response createTodoOK
 */

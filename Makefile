@@ -13,4 +13,15 @@ run-dev:
 	docker-compose up
 
 swagger:
-	$(swagger) generate server -t svc --exclude-main --skip-models -m ../svc/models -A tasker
+	$(swagger) generate server -t svc --exclude-main  -A tasker
+
+
+test:
+	docker-compose -f ./tests/docker-compose.test.yml up --build --abort-on-container-exit
+	docker-compose -f ./tests/docker-compose.test.yml down --volumes
+
+test-db-up:
+	docker-compose -f docker-compose.test.yml up --build db
+
+test-db-down:
+	docker-compose -f docker-compose.test.yml down --volumes db

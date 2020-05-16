@@ -14,7 +14,14 @@ func InitDB() *gorm.DB {
 		panic("Failed to connect to database!")
 	}
 
+	runMigrations(db)
+
 	return db
+}
+
+func runMigrations(db *gorm.DB) {
+	db.AutoMigrate(&Task{})
+	db.AutoMigrate(&Todo{})
 }
 
 func createDbString() string {

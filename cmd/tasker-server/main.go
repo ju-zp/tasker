@@ -2,16 +2,18 @@ package main
 
 import (
 	"flag"
-	"github.com/ju-zp/tasker/svc/database"
 	"log"
 	"os"
 	"strconv"
 
-	"github.com/ju-zp/tasker/svc/todohandlers"
+	"github.com/ju-zp/tasker/svc/database"
+
+	"github.com/ju-zp/tasker/svc/handlers/taskhandlers"
+	"github.com/ju-zp/tasker/svc/handlers/todohandlers"
 
 	"github.com/go-openapi/loads"
 	"github.com/joho/godotenv"
-	"github.com/ju-zp/tasker/svc/pinghandlers"
+	"github.com/ju-zp/tasker/svc/handlers/pinghandlers"
 	"github.com/ju-zp/tasker/svc/restapi"
 	"github.com/ju-zp/tasker/svc/restapi/operations"
 )
@@ -46,6 +48,9 @@ func main() {
 	server := restapi.NewServer(api)
 	defer server.Shutdown()
 
+	taskCtx := &taskhandlers.Context{
+		DB: db,
+	}
 	// parse flags
 	flag.Parse()
 	// set the port this service will be run on
@@ -54,8 +59,13 @@ func main() {
 	// TODO: Set Handle
 	api.GetPingHandler = operations.GetPingHandlerFunc(pinghandlers.GetPing)
 
+	// todo handlers
 	api.GetTodosHandler = operations.GetTodosHandlerFunc(todohandlers.GetTodos)
 	api.CreateTodoHandler = operations.CreateTodoHandlerFunc(todohandlers.CreateTodo)
+
+	// task handlers
+	api.GetTasksHandler = operations.GetTasksHandlerFunc(taskCtx.GetTasks)
+	api.CreateTaskHandler = operations.CreateTaskHandlerFunc(taskCtx.CreateTask)
 
 	// serve API
 	if err := server.Serve(); err != nil {
