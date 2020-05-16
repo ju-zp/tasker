@@ -9,7 +9,6 @@ import (
 
 // GetTodos gets all todos
 func GetTodos(params operations.GetTodosParams) middleware.Responder {
-
 	fmt.Println("here")
 	return operations.NewGetTodosOK()
 }
