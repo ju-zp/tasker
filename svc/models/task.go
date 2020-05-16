@@ -14,8 +14,10 @@ import (
 type Task struct {
 	gorm.Model
 
-	// done
+	// title
 	// Required: true
+	Title string `json:"string"`
+
 	Done *bool `json:"done"`
 }
 
@@ -23,7 +25,7 @@ type Task struct {
 func (m *Task) Validate(formats strfmt.Registry) error {
 	var res []error
 
-	if err := m.validateDone(formats); err != nil {
+	if err := m.validateTitle(formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -33,7 +35,7 @@ func (m *Task) Validate(formats strfmt.Registry) error {
 	return nil
 }
 
-func (m *Task) validateDone(formats strfmt.Registry) error {
+func (m *Task) validateTitle(formats strfmt.Registry) error {
 
 	if err := validate.Required("done", "body", m.Done); err != nil {
 		return err

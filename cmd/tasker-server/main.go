@@ -2,11 +2,10 @@ package main
 
 import (
 	"flag"
+	"github.com/ju-zp/tasker/svc/database"
 	"log"
 	"os"
 	"strconv"
-
-	"github.com/ju-zp/tasker/svc/models"
 
 	"github.com/ju-zp/tasker/svc/todohandlers"
 
@@ -26,7 +25,7 @@ func init() {
 
 func main() {
 
-	db := models.InitDB()
+	db := database.InitDB()
 
 	defer db.Close()
 
