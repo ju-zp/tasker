@@ -28,7 +28,6 @@ type Todo struct {
 	TaskID int64 `json:"taskId,omitempty"`
 
 	// the content of the todo
-	// Required: true
 	Todo *string `json:"todo"`
 }
 
