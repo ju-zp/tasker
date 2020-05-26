@@ -2,7 +2,6 @@ package main
 
 import (
 	"flag"
-	"github.com/ju-zp/tasker/svc/database"
 	"log"
 	"os"
 	"strconv"
