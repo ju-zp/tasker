@@ -106,6 +106,37 @@ func init() {
         }
       }
     },
+    "/task/{taskId}": {
+      "get": {
+        "operationId": "getTaskTodos",
+        "parameters": [
+          {
+            "$ref": "#/parameters/path_taskId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the todos associated to a taks",
+            "schema": {
+              "description": "the task and associated todos",
+              "type": "object",
+              "properties": {
+                "task": {
+                  "$ref": "#/definitions/task"
+                },
+                "todos": {
+                  "description": "Array of todos",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/todo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/todo": {
       "get": {
         "operationId": "getTodos",
@@ -203,6 +234,15 @@ func init() {
           "type": "string"
         }
       }
+    }
+  },
+  "parameters": {
+    "path_taskId": {
+      "type": "string",
+      "description": "ID of a task",
+      "name": "taskId",
+      "in": "path",
+      "required": true
     }
   }
 }`))
@@ -295,6 +335,41 @@ func init() {
         }
       }
     },
+    "/task/{taskId}": {
+      "get": {
+        "operationId": "getTaskTodos",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ID of a task",
+            "name": "taskId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Get the todos associated to a taks",
+            "schema": {
+              "description": "the task and associated todos",
+              "type": "object",
+              "properties": {
+                "task": {
+                  "$ref": "#/definitions/task"
+                },
+                "todos": {
+                  "description": "Array of todos",
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/todo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/todo": {
       "get": {
         "operationId": "getTodos",
@@ -392,6 +467,15 @@ func init() {
           "type": "string"
         }
       }
+    }
+  },
+  "parameters": {
+    "path_taskId": {
+      "type": "string",
+      "description": "ID of a task",
+      "name": "taskId",
+      "in": "path",
+      "required": true
     }
   }
 }`))

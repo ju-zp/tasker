@@ -10,6 +10,14 @@ schemes:
 - http
 swagger: "2.0"
 #
+parameters:
+  path_taskId:
+    in: path
+    name: taskId
+    type: string
+    required: true
+    description: ID of a task
+#
 definitions:
   todo:
     type: object
@@ -92,9 +100,11 @@ paths:
           schema:
             type: string
             description: Body of the request was Incomplete
-  /task/{id}:
+  /task/{taskId}:
     get:
       operationId: getTaskTodos
+      parameters:
+        - $ref: "#/parameters/path_taskId"
       responses:
         200:
           description: Get the todos associated to a taks

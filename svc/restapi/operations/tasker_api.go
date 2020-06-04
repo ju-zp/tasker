@@ -50,6 +50,9 @@ func NewTaskerAPI(spec *loads.Document) *TaskerAPI {
 		GetPingHandler: GetPingHandlerFunc(func(params GetPingParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetPing has not yet been implemented")
 		}),
+		GetTaskTodosHandler: GetTaskTodosHandlerFunc(func(params GetTaskTodosParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetTaskTodos has not yet been implemented")
+		}),
 		GetTasksHandler: GetTasksHandlerFunc(func(params GetTasksParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetTasks has not yet been implemented")
 		}),
@@ -95,6 +98,8 @@ type TaskerAPI struct {
 	CreateTodoHandler CreateTodoHandler
 	// GetPingHandler sets the operation handler for the get ping operation
 	GetPingHandler GetPingHandler
+	// GetTaskTodosHandler sets the operation handler for the get task todos operation
+	GetTaskTodosHandler GetTaskTodosHandler
 	// GetTasksHandler sets the operation handler for the get tasks operation
 	GetTasksHandler GetTasksHandler
 	// GetTodosHandler sets the operation handler for the get todos operation
@@ -173,6 +178,9 @@ func (o *TaskerAPI) Validate() error {
 	}
 	if o.GetPingHandler == nil {
 		unregistered = append(unregistered, "GetPingHandler")
+	}
+	if o.GetTaskTodosHandler == nil {
+		unregistered = append(unregistered, "GetTaskTodosHandler")
 	}
 	if o.GetTasksHandler == nil {
 		unregistered = append(unregistered, "GetTasksHandler")
@@ -280,6 +288,10 @@ func (o *TaskerAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/ping"] = NewGetPing(o.context, o.GetPingHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/task/{taskId}"] = NewGetTaskTodos(o.context, o.GetTaskTodosHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
