@@ -2,6 +2,7 @@ package taskhandlers
 
 import (
 	"fmt"
+	"strconv"
 
 	"github.com/ju-zp/tasker/svc/models"
 
@@ -39,4 +40,24 @@ func (ctx Context) CreateTask(params operations.CreateTaskParams) middleware.Res
 	}
 
 	return operations.NewCreateTaskOK().WithPayload(&task)
+}
+
+// GetTaskTodos gets the task and the associated todos
+func (ctx Context) GetTaskTodos(params operations.GetTaskTodosParams) middleware.Responder {
+	id, _ := strconv.Atoi(params.TaskID)
+
+	task := models.Task{
+		ID: int64(id),
+	}
+
+	ctx.DB.Find(&task)
+
+	var todos []*models.Todo
+
+	ctx.DB.Where("task_id = ?", params.TaskID).Find(&todos)
+
+	return operations.NewGetTaskTodosOK().WithPayload(&operations.GetTaskTodosOKBody{
+		Task:  &task,
+		Todos: todos,
+	})
 }
