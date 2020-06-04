@@ -92,6 +92,23 @@ paths:
           schema:
             type: string
             description: Body of the request was Incomplete
+  /task/{id}:
+    get:
+      operationId: getTaskTodos
+      responses:
+        200:
+          description: Get the todos associated to a taks
+          schema:
+            type: object
+            description: the task and associated todos
+            properties:
+              task:
+                $ref: "#/definitions/task"
+              todos:
+                type: array
+                description: Array of todos
+                items:
+                  $ref: "#/definitions/todo"
   /todo:
     get:
       operationId: getTodos
