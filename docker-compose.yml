@@ -6,7 +6,7 @@ services:
     volumes:
       - .:/go/src/tasker
     working_dir: /go/src/tasker
-    command: go run cmd/tasker-server/main.go
+    command: go run main.go
     ports:
       - 3000:3000
     environment:
