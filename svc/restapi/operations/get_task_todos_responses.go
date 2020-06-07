@@ -14,7 +14,7 @@ import (
 // GetTaskTodosOKCode is the HTTP code returned for type GetTaskTodosOK
 const GetTaskTodosOKCode int = 200
 
-/*GetTaskTodosOK Get the todos associated to a taks
+/*GetTaskTodosOK Get the todos associated to a task
 
 swagger:response getTaskTodosOK
 */

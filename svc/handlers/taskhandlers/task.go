@@ -61,3 +61,9 @@ func (ctx Context) GetTaskTodos(params operations.GetTaskTodosParams) middleware
 		Todos: todos,
 	})
 }
+
+// CreateTaskTodo creates a todo for a given task
+func (ctx Context) CreateTaskTodo(params operations.CreateTaskTodoParams) middleware.Responder {
+	fmt.Println("hello")
+	return operations.NewCreateTaskTodoOK()
+}

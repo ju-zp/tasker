@@ -44,6 +44,9 @@ func NewTaskerAPI(spec *loads.Document) *TaskerAPI {
 		CreateTaskHandler: CreateTaskHandlerFunc(func(params CreateTaskParams) middleware.Responder {
 			return middleware.NotImplemented("operation CreateTask has not yet been implemented")
 		}),
+		CreateTaskTodoHandler: CreateTaskTodoHandlerFunc(func(params CreateTaskTodoParams) middleware.Responder {
+			return middleware.NotImplemented("operation CreateTaskTodo has not yet been implemented")
+		}),
 		CreateTodoHandler: CreateTodoHandlerFunc(func(params CreateTodoParams) middleware.Responder {
 			return middleware.NotImplemented("operation CreateTodo has not yet been implemented")
 		}),
@@ -94,6 +97,8 @@ type TaskerAPI struct {
 
 	// CreateTaskHandler sets the operation handler for the create task operation
 	CreateTaskHandler CreateTaskHandler
+	// CreateTaskTodoHandler sets the operation handler for the create task todo operation
+	CreateTaskTodoHandler CreateTaskTodoHandler
 	// CreateTodoHandler sets the operation handler for the create todo operation
 	CreateTodoHandler CreateTodoHandler
 	// GetPingHandler sets the operation handler for the get ping operation
@@ -172,6 +177,9 @@ func (o *TaskerAPI) Validate() error {
 
 	if o.CreateTaskHandler == nil {
 		unregistered = append(unregistered, "CreateTaskHandler")
+	}
+	if o.CreateTaskTodoHandler == nil {
+		unregistered = append(unregistered, "CreateTaskTodoHandler")
 	}
 	if o.CreateTodoHandler == nil {
 		unregistered = append(unregistered, "CreateTodoHandler")
@@ -280,6 +288,10 @@ func (o *TaskerAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/task"] = NewCreateTask(o.context, o.CreateTaskHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/task/{taskId}/todo"] = NewCreateTaskTodo(o.context, o.CreateTaskTodoHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}

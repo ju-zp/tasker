@@ -107,7 +107,7 @@ paths:
         - $ref: "#/parameters/path_taskId"
       responses:
         200:
-          description: Get the todos associated to a taks
+          description: Get the todos associated to a task
           schema:
             type: object
             description: the task and associated todos
@@ -119,6 +119,21 @@ paths:
                 description: Array of todos
                 items:
                   $ref: "#/definitions/todo"
+  /task/{taskId}/todo:
+    post:
+      operationId: createTaskTodo
+      parameters:
+        - $ref: "#/parameters/path_taskId"
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/task"
+      responses:
+        200:
+          description: success message
+          schema:
+            type: string
+            description: operation was successful
   /todo:
     get:
       operationId: getTodos

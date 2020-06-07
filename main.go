@@ -67,6 +67,7 @@ func main() {
 	api.GetTasksHandler = operations.GetTasksHandlerFunc(taskCtx.GetTasks)
 	api.CreateTaskHandler = operations.CreateTaskHandlerFunc(taskCtx.CreateTask)
 	api.GetTaskTodosHandler = operations.GetTaskTodosHandlerFunc(taskCtx.GetTaskTodos)
+	api.CreateTaskTodoHandler = operations.CreateTaskTodoHandlerFunc(taskCtx.CreateTaskTodo)
 
 	// serve API
 	if err := server.Serve(); err != nil {

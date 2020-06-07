@@ -116,7 +116,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Get the todos associated to a taks",
+            "description": "Get the todos associated to a task",
             "schema": {
               "description": "the task and associated todos",
               "type": "object",
@@ -132,6 +132,32 @@ func init() {
                   }
                 }
               }
+            }
+          }
+        }
+      }
+    },
+    "/task/{taskId}/todo": {
+      "post": {
+        "operationId": "createTaskTodo",
+        "parameters": [
+          {
+            "$ref": "#/parameters/path_taskId"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/task"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success message",
+            "schema": {
+              "description": "operation was successful",
+              "type": "string"
             }
           }
         }
@@ -349,7 +375,7 @@ func init() {
         ],
         "responses": {
           "200": {
-            "description": "Get the todos associated to a taks",
+            "description": "Get the todos associated to a task",
             "schema": {
               "description": "the task and associated todos",
               "type": "object",
@@ -365,6 +391,36 @@ func init() {
                   }
                 }
               }
+            }
+          }
+        }
+      }
+    },
+    "/task/{taskId}/todo": {
+      "post": {
+        "operationId": "createTaskTodo",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ID of a task",
+            "name": "taskId",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/task"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success message",
+            "schema": {
+              "description": "operation was successful",
+              "type": "string"
             }
           }
         }
