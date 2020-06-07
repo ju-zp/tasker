@@ -35,7 +35,7 @@ type CreateTaskTodoParams struct {
 	/*
 	  In: body
 	*/
-	Body *models.Task
+	Body *models.Todo
 	/*ID of a task
 	  Required: true
 	  In: path
@@ -54,7 +54,7 @@ func (o *CreateTaskTodoParams) BindRequest(r *http.Request, route *middleware.Ma
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		var body models.Task
+		var body models.Todo
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			res = append(res, errors.NewParseError("body", "body", "", err))
 		} else {

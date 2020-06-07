@@ -148,7 +148,7 @@ func init() {
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/task"
+              "$ref": "#/definitions/todo"
             }
           }
         ],
@@ -411,7 +411,7 @@ func init() {
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/task"
+              "$ref": "#/definitions/todo"
             }
           }
         ],

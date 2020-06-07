@@ -127,7 +127,7 @@ paths:
         - name: body
           in: body
           schema:
-            $ref: "#/definitions/task"
+            $ref: "#/definitions/todo"
       responses:
         200:
           description: success message

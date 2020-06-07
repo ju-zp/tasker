@@ -64,6 +64,29 @@ func (ctx Context) GetTaskTodos(params operations.GetTaskTodosParams) middleware
 
 // CreateTaskTodo creates a todo for a given task
 func (ctx Context) CreateTaskTodo(params operations.CreateTaskTodoParams) middleware.Responder {
-	fmt.Println("hello")
-	return operations.NewCreateTaskTodoOK()
+	id, _ := strconv.Atoi(params.TaskID)
+
+	task := models.Task{
+		ID: int64(id),
+	}
+
+	err := ctx.DB.Find(&task).Error
+
+	if err != nil {
+		return nil
+	}
+
+	todo := models.Todo{
+		Todo: params.Body.Todo,
+		TaskID: task.ID,
+	}
+
+	err = ctx.DB.Create(&todo).Error
+
+	if err != nil {
+		fmt.Println("unable to save todo")
+		fmt.Println("error: ", err.Error())
+	}
+
+	return operations.NewCreateTaskTodoOK().WithPayload("success")
 }
