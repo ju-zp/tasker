@@ -2,6 +2,7 @@ package taskhandlers
 
 import (
 	"fmt"
+	"github.com/go-openapi/swag"
 	"strconv"
 
 	"github.com/ju-zp/tasker/svc/models"
@@ -77,8 +78,9 @@ func (ctx Context) CreateTaskTodo(params operations.CreateTaskTodoParams) middle
 	}
 
 	todo := models.Todo{
-		Todo: params.Body.Todo,
+		Todo: &params.Body.Todo,
 		TaskID: task.ID,
+		Done: swag.Bool(false),
 	}
 
 	err = ctx.DB.Create(&todo).Error

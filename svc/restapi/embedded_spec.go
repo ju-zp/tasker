@@ -148,7 +148,14 @@ func init() {
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/todo"
+              "description": "Body request",
+              "type": "object",
+              "properties": {
+                "todo": {
+                  "description": "content of the todo",
+                  "type": "string"
+                }
+              }
             }
           }
         ],
@@ -213,6 +220,32 @@ func init() {
           }
         }
       }
+    },
+    "/todo/{todoId}/status": {
+      "post": {
+        "operationId": "setTodoStatus",
+        "parameters": [
+          {
+            "$ref": "#/parameters/path_todoId"
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/todoStatus"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated the status of todo",
+            "schema": {
+              "description": "Successfully updated todo",
+              "type": "string"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -239,7 +272,9 @@ func init() {
     "todo": {
       "type": "object",
       "required": [
-        "todo"
+        "todo",
+        "done",
+        "id"
       ],
       "properties": {
         "done": {
@@ -260,6 +295,17 @@ func init() {
           "type": "string"
         }
       }
+    },
+    "todoStatus": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "type": "boolean"
+        }
+      }
     }
   },
   "parameters": {
@@ -267,6 +313,13 @@ func init() {
       "type": "string",
       "description": "ID of a task",
       "name": "taskId",
+      "in": "path",
+      "required": true
+    },
+    "path_todoId": {
+      "type": "string",
+      "description": "ID of a todo",
+      "name": "todoId",
       "in": "path",
       "required": true
     }
@@ -411,7 +464,14 @@ func init() {
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/todo"
+              "description": "Body request",
+              "type": "object",
+              "properties": {
+                "todo": {
+                  "description": "content of the todo",
+                  "type": "string"
+                }
+              }
             }
           }
         ],
@@ -476,6 +536,36 @@ func init() {
           }
         }
       }
+    },
+    "/todo/{todoId}/status": {
+      "post": {
+        "operationId": "setTodoStatus",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ID of a todo",
+            "name": "todoId",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/todoStatus"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Updated the status of todo",
+            "schema": {
+              "description": "Successfully updated todo",
+              "type": "string"
+            }
+          }
+        }
+      }
     }
   },
   "definitions": {
@@ -502,7 +592,9 @@ func init() {
     "todo": {
       "type": "object",
       "required": [
-        "todo"
+        "todo",
+        "done",
+        "id"
       ],
       "properties": {
         "done": {
@@ -523,6 +615,17 @@ func init() {
           "type": "string"
         }
       }
+    },
+    "todoStatus": {
+      "type": "object",
+      "required": [
+        "status"
+      ],
+      "properties": {
+        "status": {
+          "type": "boolean"
+        }
+      }
     }
   },
   "parameters": {
@@ -530,6 +633,13 @@ func init() {
       "type": "string",
       "description": "ID of a task",
       "name": "taskId",
+      "in": "path",
+      "required": true
+    },
+    "path_todoId": {
+      "type": "string",
+      "description": "ID of a todo",
+      "name": "todoId",
       "in": "path",
       "required": true
     }

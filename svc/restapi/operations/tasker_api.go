@@ -62,6 +62,9 @@ func NewTaskerAPI(spec *loads.Document) *TaskerAPI {
 		GetTodosHandler: GetTodosHandlerFunc(func(params GetTodosParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetTodos has not yet been implemented")
 		}),
+		SetTodoStatusHandler: SetTodoStatusHandlerFunc(func(params SetTodoStatusParams) middleware.Responder {
+			return middleware.NotImplemented("operation SetTodoStatus has not yet been implemented")
+		}),
 	}
 }
 
@@ -109,6 +112,8 @@ type TaskerAPI struct {
 	GetTasksHandler GetTasksHandler
 	// GetTodosHandler sets the operation handler for the get todos operation
 	GetTodosHandler GetTodosHandler
+	// SetTodoStatusHandler sets the operation handler for the set todo status operation
+	SetTodoStatusHandler SetTodoStatusHandler
 	// ServeError is called when an error is received, there is a default handler
 	// but you can set your own with this
 	ServeError func(http.ResponseWriter, *http.Request, error)
@@ -195,6 +200,9 @@ func (o *TaskerAPI) Validate() error {
 	}
 	if o.GetTodosHandler == nil {
 		unregistered = append(unregistered, "GetTodosHandler")
+	}
+	if o.SetTodoStatusHandler == nil {
+		unregistered = append(unregistered, "SetTodoStatusHandler")
 	}
 
 	if len(unregistered) > 0 {
@@ -312,6 +320,10 @@ func (o *TaskerAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/todo"] = NewGetTodos(o.context, o.GetTodosHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/todo/{todoId}/status"] = NewSetTodoStatus(o.context, o.SetTodoStatusHandler)
 }
 
 // Serve creates a http handler to serve the API over HTTP

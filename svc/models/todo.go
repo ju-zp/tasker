@@ -18,11 +18,13 @@ import (
 type Todo struct {
 
 	// done
-	Done bool `json:"done,omitempty"`
+	// Required: true
+	Done *bool `json:"done"`
 
 	// id
+	// Required: true
 	// Read Only: true
-	ID int64 `json:"id,omitempty"`
+	ID int64 `json:"id"`
 
 	// task it is associated with
 	TaskID int64 `json:"taskId,omitempty"`
@@ -36,6 +38,14 @@ type Todo struct {
 func (m *Todo) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateDone(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateID(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateTodo(formats); err != nil {
 		res = append(res, err)
 	}
@@ -43,6 +53,24 @@ func (m *Todo) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *Todo) validateDone(formats strfmt.Registry) error {
+
+	if err := validate.Required("done", "body", m.Done); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Todo) validateID(formats strfmt.Registry) error {
+
+	if err := validate.Required("id", "body", int64(m.ID)); err != nil {
+		return err
+	}
+
 	return nil
 }
 

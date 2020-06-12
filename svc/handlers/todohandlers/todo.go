@@ -19,3 +19,9 @@ func CreateTodo(params operations.CreateTodoParams) middleware.Responder {
 	fmt.Println(swag.StringValue(params.Body.Todo))
 	return operations.NewCreateTodoOK()
 }
+
+// SetTodoStatus updates the done field kfo a given todo
+func SetTodoStatus(params operations.SetTodoStatusParams) middleware.Responder {
+	fmt.Println("here")
+	return operations.NewSetTodoStatusOK()
+}

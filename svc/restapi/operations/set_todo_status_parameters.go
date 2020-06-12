@@ -12,20 +12,22 @@ import (
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/strfmt"
+
+	"github.com/ju-zp/tasker/svc/models"
 )
 
-// NewCreateTaskTodoParams creates a new CreateTaskTodoParams object
+// NewSetTodoStatusParams creates a new SetTodoStatusParams object
 // no default values defined in spec.
-func NewCreateTaskTodoParams() CreateTaskTodoParams {
+func NewSetTodoStatusParams() SetTodoStatusParams {
 
-	return CreateTaskTodoParams{}
+	return SetTodoStatusParams{}
 }
 
-// CreateTaskTodoParams contains all the bound params for the create task todo operation
+// SetTodoStatusParams contains all the bound params for the set todo status operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters createTaskTodo
-type CreateTaskTodoParams struct {
+// swagger:parameters setTodoStatus
+type SetTodoStatusParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
@@ -33,26 +35,26 @@ type CreateTaskTodoParams struct {
 	/*
 	  In: body
 	*/
-	Body CreateTaskTodoBody
-	/*ID of a task
+	Body *models.TodoStatus
+	/*ID of a todo
 	  Required: true
 	  In: path
 	*/
-	TaskID string
+	TodoID string
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
 // for simple values it will use straight method calls.
 //
-// To ensure default values, the struct must have been initialized with NewCreateTaskTodoParams() beforehand.
-func (o *CreateTaskTodoParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
+// To ensure default values, the struct must have been initialized with NewSetTodoStatusParams() beforehand.
+func (o *SetTodoStatusParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
 
 	o.HTTPRequest = r
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		var body CreateTaskTodoBody
+		var body models.TodoStatus
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			res = append(res, errors.NewParseError("body", "body", "", err))
 		} else {
@@ -62,12 +64,12 @@ func (o *CreateTaskTodoParams) BindRequest(r *http.Request, route *middleware.Ma
 			}
 
 			if len(res) == 0 {
-				o.Body = body
+				o.Body = &body
 			}
 		}
 	}
-	rTaskID, rhkTaskID, _ := route.Params.GetOK("taskId")
-	if err := o.bindTaskID(rTaskID, rhkTaskID, route.Formats); err != nil {
+	rTodoID, rhkTodoID, _ := route.Params.GetOK("todoId")
+	if err := o.bindTodoID(rTodoID, rhkTodoID, route.Formats); err != nil {
 		res = append(res, err)
 	}
 
@@ -77,8 +79,8 @@ func (o *CreateTaskTodoParams) BindRequest(r *http.Request, route *middleware.Ma
 	return nil
 }
 
-// bindTaskID binds and validates parameter TaskID from path.
-func (o *CreateTaskTodoParams) bindTaskID(rawData []string, hasKey bool, formats strfmt.Registry) error {
+// bindTodoID binds and validates parameter TodoID from path.
+func (o *SetTodoStatusParams) bindTodoID(rawData []string, hasKey bool, formats strfmt.Registry) error {
 	var raw string
 	if len(rawData) > 0 {
 		raw = rawData[len(rawData)-1]
@@ -87,7 +89,7 @@ func (o *CreateTaskTodoParams) bindTaskID(rawData []string, hasKey bool, formats
 	// Required: true
 	// Parameter is provided by construction from the route
 
-	o.TaskID = raw
+	o.TodoID = raw
 
 	return nil
 }

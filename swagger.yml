@@ -17,12 +17,20 @@ parameters:
     type: string
     required: true
     description: ID of a task
+  path_todoId:
+    in: path
+    name: todoId
+    type: string
+    required: true
+    description: ID of a todo
 #
 definitions:
   todo:
     type: object
     required:
       - todo
+      - done
+      - id
     properties:
       id:
         type: integer
@@ -36,6 +44,13 @@ definitions:
         type: string
         description: "the content of the todo"
       done:
+        type: boolean
+  todoStatus:
+    type: object
+    required:
+      - status
+    properties:
+      status:
         type: boolean
   task:
     type: object
@@ -127,7 +142,12 @@ paths:
         - name: body
           in: body
           schema:
-            $ref: "#/definitions/todo"
+            type: object
+            description: Body request
+            properties:
+              todo:
+                type: string
+                description: content of the todo
       responses:
         200:
           description: success message
@@ -167,7 +187,18 @@ paths:
           schema:
             type: string
             description: Body of the request was Incomplete
-  
-
-
-
+  /todo/{todoId}/status:
+    post:
+      operationId: setTodoStatus
+      parameters:
+        - $ref: "#/parameters/path_todoId"
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/todoStatus"
+      responses:
+        200:
+          description: Updated the status of todo
+          schema:
+            type: string
+            description: Successfully updated todo
