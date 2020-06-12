@@ -221,6 +221,25 @@ func init() {
         }
       }
     },
+    "/todo/{todoId}": {
+      "delete": {
+        "operationId": "deleteTodo",
+        "parameters": [
+          {
+            "$ref": "#/parameters/path_todoId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete a todo",
+            "schema": {
+              "description": "Successfully deleted a todo",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "/todo/{todoId}/status": {
       "post": {
         "operationId": "setTodoStatus",
@@ -531,6 +550,29 @@ func init() {
             "description": "Incomplete data",
             "schema": {
               "description": "Body of the request was Incomplete",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "/todo/{todoId}": {
+      "delete": {
+        "operationId": "deleteTodo",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ID of a todo",
+            "name": "todoId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete a todo",
+            "schema": {
+              "description": "Successfully deleted a todo",
               "type": "string"
             }
           }

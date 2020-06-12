@@ -66,6 +66,7 @@ func main() {
 	api.GetTodosHandler = operations.GetTodosHandlerFunc(todohandlers.GetTodos)
 	api.CreateTodoHandler = operations.CreateTodoHandlerFunc(todohandlers.CreateTodo)
 	api.SetTodoStatusHandler = operations.SetTodoStatusHandlerFunc(todoCtx.SetTodoStatus)
+	api.DeleteTodoHandler = operations.DeleteTodoHandlerFunc(todoCtx.DeleteTodo)
 
 	// task handlers
 	api.GetTasksHandler = operations.GetTasksHandlerFunc(taskCtx.GetTasks)

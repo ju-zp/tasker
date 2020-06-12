@@ -187,6 +187,17 @@ paths:
           schema:
             type: string
             description: Body of the request was Incomplete
+  /todo/{todoId}:
+    delete:
+      operationId: deleteTodo
+      parameters:
+        - $ref: "#/parameters/path_todoId"
+      responses:
+        200:
+          description: Delete a todo
+          schema:
+            type: string
+            description: Successfully deleted a todo
   /todo/{todoId}/status:
     post:
       operationId: setTodoStatus
