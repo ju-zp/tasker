@@ -4,6 +4,8 @@ import (
 	"fmt"
 	"github.com/go-openapi/swag"
 	"github.com/jinzhu/gorm"
+	"github.com/ju-zp/tasker/svc/models"
+	"strconv"
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/ju-zp/tasker/svc/restapi/operations"
@@ -26,7 +28,26 @@ func CreateTodo(params operations.CreateTodoParams) middleware.Responder {
 }
 
 // SetTodoStatus updates the done field kfo a given todo
-func (c *Context)SetTodoStatus(params operations.SetTodoStatusParams) middleware.Responder {
-	fmt.Println("here")
-	return operations.NewSetTodoStatusOK()
+func (ctx *Context)SetTodoStatus(params operations.SetTodoStatusParams) middleware.Responder {
+	id, _ := strconv.Atoi(params.TodoID)
+
+	todo := models.Todo{
+		ID:     int64(id),
+	}
+
+	err := ctx.DB.Find(&todo).Error
+
+	if err != nil {
+		return nil
+	}
+
+	todo.Done = params.Body.Status
+
+	err = ctx.DB.Save(&todo).Error
+
+	if err != nil {
+		return nil
+	}
+
+	return operations.NewSetTodoStatusOK().WithPayload("Success")
 }
