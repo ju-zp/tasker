@@ -48,6 +48,9 @@ func main() {
 	server := restapi.NewServer(api)
 	defer server.Shutdown()
 
+	todoCtx := &todohandlers.Context{
+		DB: db,
+	}
 	taskCtx := &taskhandlers.Context{
 		DB: db,
 	}
@@ -62,7 +65,7 @@ func main() {
 	// todo handlers
 	api.GetTodosHandler = operations.GetTodosHandlerFunc(todohandlers.GetTodos)
 	api.CreateTodoHandler = operations.CreateTodoHandlerFunc(todohandlers.CreateTodo)
-	api.SetTodoStatusHandler = operations.SetTodoStatusHandlerFunc(todohandlers.SetTodoStatus)
+	api.SetTodoStatusHandler = operations.SetTodoStatusHandlerFunc(todoCtx.SetTodoStatus)
 
 	// task handlers
 	api.GetTasksHandler = operations.GetTasksHandlerFunc(taskCtx.GetTasks)

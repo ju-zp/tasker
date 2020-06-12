@@ -3,10 +3,15 @@ package todohandlers
 import (
 	"fmt"
 	"github.com/go-openapi/swag"
+	"github.com/jinzhu/gorm"
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/ju-zp/tasker/svc/restapi/operations"
 )
+
+type Context struct {
+	DB *gorm.DB
+}
 
 // GetTodos gets all todos
 func GetTodos(params operations.GetTodosParams) middleware.Responder {
@@ -21,7 +26,7 @@ func CreateTodo(params operations.CreateTodoParams) middleware.Responder {
 }
 
 // SetTodoStatus updates the done field kfo a given todo
-func SetTodoStatus(params operations.SetTodoStatusParams) middleware.Responder {
+func (c *Context)SetTodoStatus(params operations.SetTodoStatusParams) middleware.Responder {
 	fmt.Println("here")
 	return operations.NewSetTodoStatusOK()
 }
