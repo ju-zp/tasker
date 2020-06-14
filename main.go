@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"github.com/ju-zp/tasker/svc/models"
 	"log"
 	"os"
 	"strconv"
@@ -10,6 +11,7 @@ import (
 
 	"github.com/ju-zp/tasker/svc/handlers/taskhandlers"
 	"github.com/ju-zp/tasker/svc/handlers/todohandlers"
+	"github.com/ju-zp/tasker/svc/handlers/projecthandlers"
 
 	"github.com/go-openapi/loads"
 	"github.com/joho/godotenv"
@@ -48,6 +50,9 @@ func main() {
 	server := restapi.NewServer(api)
 	defer server.Shutdown()
 
+	projectCtx := &projecthandlers.Context{
+		DB: db,
+	}
 	todoCtx := &todohandlers.Context{
 		DB: db,
 	}
@@ -74,6 +79,8 @@ func main() {
 	api.GetTaskTodosHandler = operations.GetTaskTodosHandlerFunc(taskCtx.GetTaskTodos)
 	api.CreateTaskTodoHandler = operations.CreateTaskTodoHandlerFunc(taskCtx.CreateTaskTodo)
 	api.DeleteTaskHandler = operations.DeleteTaskHandlerFunc(taskCtx.DeleteTask)
+
+	api.CreateProjectHandler = operations.CreateProjectHandlerFunc(projectCtx.CreateProject)
 
 	// serve API
 	if err := server.Serve(); err != nil {

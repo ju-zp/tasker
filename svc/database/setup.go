@@ -30,6 +30,7 @@ func InitDB() *gorm.DB {
 func (database Database)RunMigrations() {
 	database.CreateTaskTable()
 	database.CreateTodoTable()
+	database.CreateProjectTable()
 }
 
 func createDbString() string {
