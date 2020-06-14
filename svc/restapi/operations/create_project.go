@@ -8,7 +8,11 @@ package operations
 import (
 	"net/http"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // CreateProjectHandlerFunc turns a function with the right signature into a create project handler
@@ -55,4 +59,58 @@ func (o *CreateProject) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
+}
+
+// CreateProjectBody create project body
+//
+// swagger:model CreateProjectBody
+type CreateProjectBody struct {
+
+	// description of the project
+	Description string `json:"description,omitempty"`
+
+	// title of a project
+	// Required: true
+	Title *string `json:"title"`
+}
+
+// Validate validates this create project body
+func (o *CreateProjectBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateTitle(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateProjectBody) validateTitle(formats strfmt.Registry) error {
+
+	if err := validate.Required("body"+"."+"title", "body", o.Title); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateProjectBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateProjectBody) UnmarshalBinary(b []byte) error {
+	var res CreateProjectBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
 }

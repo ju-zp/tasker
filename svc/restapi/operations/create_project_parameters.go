@@ -11,8 +11,6 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
-
-	"github.com/ju-zp/tasker/svc/models"
 )
 
 // NewCreateProjectParams creates a new CreateProjectParams object
@@ -34,7 +32,7 @@ type CreateProjectParams struct {
 	/*
 	  In: body
 	*/
-	Body *models.Project
+	Body CreateProjectBody
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -48,7 +46,7 @@ func (o *CreateProjectParams) BindRequest(r *http.Request, route *middleware.Mat
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		var body models.Project
+		var body CreateProjectBody
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			res = append(res, errors.NewParseError("body", "body", "", err))
 		} else {
@@ -58,7 +56,7 @@ func (o *CreateProjectParams) BindRequest(r *http.Request, route *middleware.Mat
 			}
 
 			if len(res) == 0 {
-				o.Body = &body
+				o.Body = body
 			}
 		}
 	}

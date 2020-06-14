@@ -18,11 +18,13 @@ import (
 type Project struct {
 
 	// description of the project
-	Description string `json:"description,omitempty"`
+	// Required: true
+	Description *string `json:"description"`
 
 	// id
+	// Required: true
 	// Read Only: true
-	ID int64 `json:"id,omitempty"`
+	ID int64 `json:"id"`
 
 	// title of a project
 	// Required: true
@@ -33,6 +35,14 @@ type Project struct {
 func (m *Project) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateDescription(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := m.validateID(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateTitle(formats); err != nil {
 		res = append(res, err)
 	}
@@ -40,6 +50,24 @@ func (m *Project) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *Project) validateDescription(formats strfmt.Registry) error {
+
+	if err := validate.Required("description", "body", m.Description); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (m *Project) validateID(formats strfmt.Registry) error {
+
+	if err := validate.Required("id", "body", int64(m.ID)); err != nil {
+		return err
+	}
+
 	return nil
 }
 

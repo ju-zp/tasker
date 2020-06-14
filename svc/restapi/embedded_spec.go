@@ -79,7 +79,20 @@ func init() {
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/project"
+              "type": "object",
+              "required": [
+                "title"
+              ],
+              "properties": {
+                "description": {
+                  "description": "description of the project",
+                  "type": "string"
+                },
+                "title": {
+                  "description": "title of a project",
+                  "type": "string"
+                }
+              }
             }
           }
         ],
@@ -327,7 +340,9 @@ func init() {
     "project": {
       "type": "object",
       "required": [
-        "title"
+        "id",
+        "title",
+        "description"
       ],
       "properties": {
         "description": {
@@ -483,7 +498,20 @@ func init() {
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/project"
+              "type": "object",
+              "required": [
+                "title"
+              ],
+              "properties": {
+                "description": {
+                  "description": "description of the project",
+                  "type": "string"
+                },
+                "title": {
+                  "description": "title of a project",
+                  "type": "string"
+                }
+              }
             }
           }
         ],
@@ -751,7 +779,9 @@ func init() {
     "project": {
       "type": "object",
       "required": [
-        "title"
+        "id",
+        "title",
+        "description"
       ],
       "properties": {
         "description": {

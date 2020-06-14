@@ -69,7 +69,9 @@ definitions:
   project:
     type: object
     required:
+      - id
       - title
+      - description
     properties:
       id:
         type: integer
@@ -115,7 +117,16 @@ paths:
         - name: body
           in: body
           schema:
-            $ref: "#/definitions/project"
+            type: object
+            required:
+              - title
+            properties:
+              title:
+                type: string
+                description: "title of a project"
+              description:
+                type: string
+                description: "description of the project"
       responses:
         200:
           description: success message

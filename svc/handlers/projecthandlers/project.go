@@ -23,7 +23,7 @@ func (ctx *Context)GetProjects(params operations.GetProjectsParams) middleware.R
 // CreateProject creates a new project
 func (ctx *Context)CreateProject(params operations.CreateProjectParams) middleware.Responder {
 	project := models.Project{
-		Description: params.Body.Description,
+		Description: &params.Body.Description,
 		Title:       params.Body.Title,
 	}
 
