@@ -101,7 +101,7 @@ func (ctx Context) DeleteTask(params operations.DeleteTaskParams) middleware.Res
 		ID: int64(id),
 	}
 
-	_ := ctx.DB.Find(&task).Error
+	_ = ctx.DB.Find(&task).Error
 
 	var todos []*models.Todo
 
