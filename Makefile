@@ -13,7 +13,7 @@ run-dev:
 	docker-compose up
 
 swagger:
-	$(swagger) generate server -t svc --exclude-main  -A tasker
+	$(swagger) generate server -t svc --exclude-main -A tasker
 
 
 test:
