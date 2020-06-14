@@ -1,10 +1,9 @@
 package task
 
 import (
-	"fmt"
 	"github.com/jinzhu/gorm"
-"github.com/ju-zp/tasker/svc/models"
-"strconv"
+	"github.com/ju-zp/tasker/svc/models"
+	"strconv"
 )
 
 type Task models.Task
@@ -27,8 +26,6 @@ func Find(ID string, DB *gorm.DB) (*models.Task, error) {
 
 func FindByProjectID(projectID string, DB *gorm.DB) ([]*models.Task, error) {
 	var tasks []*models.Task
-
-	fmt.Println(projectID)
 
 	err := DB.Where("project_id = ?", projectID).Find(&tasks).Error
 

@@ -67,8 +67,6 @@ func main() {
 	api.GetPingHandler = operations.GetPingHandlerFunc(pinghandlers.GetPing)
 
 	// todo handlers
-	api.GetTodosHandler = operations.GetTodosHandlerFunc(todohandlers.GetTodos)
-	api.CreateTodoHandler = operations.CreateTodoHandlerFunc(todohandlers.CreateTodo)
 	api.SetTodoStatusHandler = operations.SetTodoStatusHandlerFunc(todoCtx.SetTodoStatus)
 	api.DeleteTodoHandler = operations.DeleteTodoHandlerFunc(todoCtx.DeleteTodo)
 

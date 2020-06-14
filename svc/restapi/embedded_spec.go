@@ -269,57 +269,6 @@ func init() {
         }
       }
     },
-    "/todo": {
-      "get": {
-        "operationId": "getTodos",
-        "responses": {
-          "200": {
-            "description": "Get all todos",
-            "schema": {
-              "description": "array of all the todos",
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/todo"
-              }
-            }
-          },
-          "400": {
-            "description": "Incomplete data",
-            "schema": {
-              "description": "Body of the request was Incomplete",
-              "type": "string"
-            }
-          }
-        }
-      },
-      "post": {
-        "operationId": "createTodo",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/todo"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Created todo",
-            "schema": {
-              "$ref": "#/definitions/todo"
-            }
-          },
-          "400": {
-            "description": "Incomplete data",
-            "schema": {
-              "description": "Body of the request was Incomplete",
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
     "/todo/{todoId}": {
       "delete": {
         "operationId": "deleteTodo",
@@ -755,57 +704,6 @@ func init() {
             "description": "success message",
             "schema": {
               "description": "operation was successful",
-              "type": "string"
-            }
-          }
-        }
-      }
-    },
-    "/todo": {
-      "get": {
-        "operationId": "getTodos",
-        "responses": {
-          "200": {
-            "description": "Get all todos",
-            "schema": {
-              "description": "array of all the todos",
-              "type": "array",
-              "items": {
-                "$ref": "#/definitions/todo"
-              }
-            }
-          },
-          "400": {
-            "description": "Incomplete data",
-            "schema": {
-              "description": "Body of the request was Incomplete",
-              "type": "string"
-            }
-          }
-        }
-      },
-      "post": {
-        "operationId": "createTodo",
-        "parameters": [
-          {
-            "name": "body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/todo"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "Created todo",
-            "schema": {
-              "$ref": "#/definitions/todo"
-            }
-          },
-          "400": {
-            "description": "Incomplete data",
-            "schema": {
-              "description": "Body of the request was Incomplete",
               "type": "string"
             }
           }

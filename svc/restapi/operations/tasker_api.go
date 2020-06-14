@@ -50,9 +50,6 @@ func NewTaskerAPI(spec *loads.Document) *TaskerAPI {
 		CreateTaskTodoHandler: CreateTaskTodoHandlerFunc(func(params CreateTaskTodoParams) middleware.Responder {
 			return middleware.NotImplemented("operation CreateTaskTodo has not yet been implemented")
 		}),
-		CreateTodoHandler: CreateTodoHandlerFunc(func(params CreateTodoParams) middleware.Responder {
-			return middleware.NotImplemented("operation CreateTodo has not yet been implemented")
-		}),
 		DeleteTaskHandler: DeleteTaskHandlerFunc(func(params DeleteTaskParams) middleware.Responder {
 			return middleware.NotImplemented("operation DeleteTask has not yet been implemented")
 		}),
@@ -73,9 +70,6 @@ func NewTaskerAPI(spec *loads.Document) *TaskerAPI {
 		}),
 		GetTasksHandler: GetTasksHandlerFunc(func(params GetTasksParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetTasks has not yet been implemented")
-		}),
-		GetTodosHandler: GetTodosHandlerFunc(func(params GetTodosParams) middleware.Responder {
-			return middleware.NotImplemented("operation GetTodos has not yet been implemented")
 		}),
 		SetTodoStatusHandler: SetTodoStatusHandlerFunc(func(params SetTodoStatusParams) middleware.Responder {
 			return middleware.NotImplemented("operation SetTodoStatus has not yet been implemented")
@@ -119,8 +113,6 @@ type TaskerAPI struct {
 	CreateTaskHandler CreateTaskHandler
 	// CreateTaskTodoHandler sets the operation handler for the create task todo operation
 	CreateTaskTodoHandler CreateTaskTodoHandler
-	// CreateTodoHandler sets the operation handler for the create todo operation
-	CreateTodoHandler CreateTodoHandler
 	// DeleteTaskHandler sets the operation handler for the delete task operation
 	DeleteTaskHandler DeleteTaskHandler
 	// DeleteTodoHandler sets the operation handler for the delete todo operation
@@ -135,8 +127,6 @@ type TaskerAPI struct {
 	GetTaskTodosHandler GetTaskTodosHandler
 	// GetTasksHandler sets the operation handler for the get tasks operation
 	GetTasksHandler GetTasksHandler
-	// GetTodosHandler sets the operation handler for the get todos operation
-	GetTodosHandler GetTodosHandler
 	// SetTodoStatusHandler sets the operation handler for the set todo status operation
 	SetTodoStatusHandler SetTodoStatusHandler
 	// ServeError is called when an error is received, there is a default handler
@@ -214,9 +204,6 @@ func (o *TaskerAPI) Validate() error {
 	if o.CreateTaskTodoHandler == nil {
 		unregistered = append(unregistered, "CreateTaskTodoHandler")
 	}
-	if o.CreateTodoHandler == nil {
-		unregistered = append(unregistered, "CreateTodoHandler")
-	}
 	if o.DeleteTaskHandler == nil {
 		unregistered = append(unregistered, "DeleteTaskHandler")
 	}
@@ -237,9 +224,6 @@ func (o *TaskerAPI) Validate() error {
 	}
 	if o.GetTasksHandler == nil {
 		unregistered = append(unregistered, "GetTasksHandler")
-	}
-	if o.GetTodosHandler == nil {
-		unregistered = append(unregistered, "GetTodosHandler")
 	}
 	if o.SetTodoStatusHandler == nil {
 		unregistered = append(unregistered, "SetTodoStatusHandler")
@@ -344,10 +328,6 @@ func (o *TaskerAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/task/{taskId}/todo"] = NewCreateTaskTodo(o.context, o.CreateTaskTodoHandler)
-	if o.handlers["POST"] == nil {
-		o.handlers["POST"] = make(map[string]http.Handler)
-	}
-	o.handlers["POST"]["/todo"] = NewCreateTodo(o.context, o.CreateTodoHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
@@ -376,10 +356,6 @@ func (o *TaskerAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/task"] = NewGetTasks(o.context, o.GetTasksHandler)
-	if o.handlers["GET"] == nil {
-		o.handlers["GET"] = make(map[string]http.Handler)
-	}
-	o.handlers["GET"]["/todo"] = NewGetTodos(o.context, o.GetTodosHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}

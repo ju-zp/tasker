@@ -48,11 +48,6 @@ func configureAPI(api *operations.TaskerAPI) http.Handler {
 			return middleware.NotImplemented("operation operations.CreateTaskTodo has not yet been implemented")
 		})
 	}
-	if api.CreateTodoHandler == nil {
-		api.CreateTodoHandler = operations.CreateTodoHandlerFunc(func(params operations.CreateTodoParams) middleware.Responder {
-			return middleware.NotImplemented("operation operations.CreateTodo has not yet been implemented")
-		})
-	}
 	if api.DeleteTaskHandler == nil {
 		api.DeleteTaskHandler = operations.DeleteTaskHandlerFunc(func(params operations.DeleteTaskParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.DeleteTask has not yet been implemented")
@@ -81,11 +76,6 @@ func configureAPI(api *operations.TaskerAPI) http.Handler {
 	if api.GetTasksHandler == nil {
 		api.GetTasksHandler = operations.GetTasksHandlerFunc(func(params operations.GetTasksParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.GetTasks has not yet been implemented")
-		})
-	}
-	if api.GetTodosHandler == nil {
-		api.GetTodosHandler = operations.GetTodosHandlerFunc(func(params operations.GetTodosParams) middleware.Responder {
-			return middleware.NotImplemented("operation operations.GetTodos has not yet been implemented")
 		})
 	}
 	if api.SetTodoStatusHandler == nil {
