@@ -66,6 +66,21 @@ definitions:
         description: "title of a task"
       done:
         type: boolean
+  project:
+    type: object
+    required:
+      - title
+    properties:
+      id:
+        type: integer
+        format: int64
+        readOnly: true
+      title:
+        type: string
+        description: "title of a project"
+      description:
+        type: string
+        description: "description of the project"
 #
 paths:
   /ping:
@@ -82,6 +97,31 @@ paths:
           schema:
             type: string
             description: Server is down
+  /project:
+    get:
+      operationId: getProject
+      responses:
+        200:
+          description: Get all the projects
+          schema:
+            type: array
+            description: array of all the projects
+            items:
+              $ref: "#/definitions/project"
+    post:
+      operationId: createProject
+      description: Create a new project
+      parameters:
+        - name: body
+          in: body
+          schema:
+            $ref: "#/definitions/project"
+      responses:
+        200:
+          description: success message
+          schema:
+            type: string
+            description: success
   /task:
     get:
       operationId: getTasks

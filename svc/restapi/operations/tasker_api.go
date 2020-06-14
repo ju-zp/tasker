@@ -41,6 +41,9 @@ func NewTaskerAPI(spec *loads.Document) *TaskerAPI {
 
 		JSONProducer: runtime.JSONProducer(),
 
+		CreateProjectHandler: CreateProjectHandlerFunc(func(params CreateProjectParams) middleware.Responder {
+			return middleware.NotImplemented("operation CreateProject has not yet been implemented")
+		}),
 		CreateTaskHandler: CreateTaskHandlerFunc(func(params CreateTaskParams) middleware.Responder {
 			return middleware.NotImplemented("operation CreateTask has not yet been implemented")
 		}),
@@ -58,6 +61,9 @@ func NewTaskerAPI(spec *loads.Document) *TaskerAPI {
 		}),
 		GetPingHandler: GetPingHandlerFunc(func(params GetPingParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetPing has not yet been implemented")
+		}),
+		GetProjectHandler: GetProjectHandlerFunc(func(params GetProjectParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetProject has not yet been implemented")
 		}),
 		GetTaskTodosHandler: GetTaskTodosHandlerFunc(func(params GetTaskTodosParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetTaskTodos has not yet been implemented")
@@ -104,6 +110,8 @@ type TaskerAPI struct {
 	//   - application/json
 	JSONProducer runtime.Producer
 
+	// CreateProjectHandler sets the operation handler for the create project operation
+	CreateProjectHandler CreateProjectHandler
 	// CreateTaskHandler sets the operation handler for the create task operation
 	CreateTaskHandler CreateTaskHandler
 	// CreateTaskTodoHandler sets the operation handler for the create task todo operation
@@ -116,6 +124,8 @@ type TaskerAPI struct {
 	DeleteTodoHandler DeleteTodoHandler
 	// GetPingHandler sets the operation handler for the get ping operation
 	GetPingHandler GetPingHandler
+	// GetProjectHandler sets the operation handler for the get project operation
+	GetProjectHandler GetProjectHandler
 	// GetTaskTodosHandler sets the operation handler for the get task todos operation
 	GetTaskTodosHandler GetTaskTodosHandler
 	// GetTasksHandler sets the operation handler for the get tasks operation
@@ -190,6 +200,9 @@ func (o *TaskerAPI) Validate() error {
 		unregistered = append(unregistered, "JSONProducer")
 	}
 
+	if o.CreateProjectHandler == nil {
+		unregistered = append(unregistered, "CreateProjectHandler")
+	}
 	if o.CreateTaskHandler == nil {
 		unregistered = append(unregistered, "CreateTaskHandler")
 	}
@@ -207,6 +220,9 @@ func (o *TaskerAPI) Validate() error {
 	}
 	if o.GetPingHandler == nil {
 		unregistered = append(unregistered, "GetPingHandler")
+	}
+	if o.GetProjectHandler == nil {
+		unregistered = append(unregistered, "GetProjectHandler")
 	}
 	if o.GetTaskTodosHandler == nil {
 		unregistered = append(unregistered, "GetTaskTodosHandler")
@@ -311,6 +327,10 @@ func (o *TaskerAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
+	o.handlers["POST"]["/project"] = NewCreateProject(o.context, o.CreateProjectHandler)
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
 	o.handlers["POST"]["/task"] = NewCreateTask(o.context, o.CreateTaskHandler)
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
@@ -332,6 +352,10 @@ func (o *TaskerAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"]["/ping"] = NewGetPing(o.context, o.GetPingHandler)
+	if o.handlers["GET"] == nil {
+		o.handlers["GET"] = make(map[string]http.Handler)
+	}
+	o.handlers["GET"]["/project"] = NewGetProject(o.context, o.GetProjectHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

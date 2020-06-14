@@ -55,6 +55,45 @@ func init() {
         }
       }
     },
+    "/project": {
+      "get": {
+        "operationId": "getProject",
+        "responses": {
+          "200": {
+            "description": "Get all the projects",
+            "schema": {
+              "description": "array of all the projects",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/project"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Create a new project",
+        "operationId": "createProject",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/project"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success message",
+            "schema": {
+              "description": "success",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "/task": {
       "get": {
         "operationId": "getTasks",
@@ -285,6 +324,27 @@ func init() {
     }
   },
   "definitions": {
+    "project": {
+      "type": "object",
+      "required": [
+        "title"
+      ],
+      "properties": {
+        "description": {
+          "description": "description of the project",
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true
+        },
+        "title": {
+          "description": "title of a project",
+          "type": "string"
+        }
+      }
+    },
     "task": {
       "type": "object",
       "required": [
@@ -399,6 +459,45 @@ func init() {
         }
       }
     },
+    "/project": {
+      "get": {
+        "operationId": "getProject",
+        "responses": {
+          "200": {
+            "description": "Get all the projects",
+            "schema": {
+              "description": "array of all the projects",
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/project"
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "description": "Create a new project",
+        "operationId": "createProject",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/project"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success message",
+            "schema": {
+              "description": "success",
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
     "/task": {
       "get": {
         "operationId": "getTasks",
@@ -649,6 +748,27 @@ func init() {
     }
   },
   "definitions": {
+    "project": {
+      "type": "object",
+      "required": [
+        "title"
+      ],
+      "properties": {
+        "description": {
+          "description": "description of the project",
+          "type": "string"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "readOnly": true
+        },
+        "title": {
+          "description": "title of a project",
+          "type": "string"
+        }
+      }
+    },
     "task": {
       "type": "object",
       "required": [
