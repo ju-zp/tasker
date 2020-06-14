@@ -135,6 +135,23 @@ func init() {
             }
           }
         }
+      },
+      "delete": {
+        "operationId": "deleteTask",
+        "parameters": [
+          {
+            "$ref": "#/parameters/path_taskId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete a task and associated todos",
+            "schema": {
+              "description": "success message",
+              "type": "string"
+            }
+          }
+        }
       }
     },
     "/task/{taskId}/todo": {
@@ -463,6 +480,27 @@ func init() {
                   }
                 }
               }
+            }
+          }
+        }
+      },
+      "delete": {
+        "operationId": "deleteTask",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ID of a task",
+            "name": "taskId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Delete a task and associated todos",
+            "schema": {
+              "description": "success message",
+              "type": "string"
             }
           }
         }

@@ -134,6 +134,16 @@ paths:
                 description: Array of todos
                 items:
                   $ref: "#/definitions/todo"
+    delete:
+      operationId: deleteTask
+      parameters:
+        - $ref: "#/parameters/path_taskId"
+      responses:
+        200:
+          description: Delete a task and associated todos
+          schema:
+            type: string
+            description: success message
   /task/{taskId}/todo:
     post:
       operationId: createTaskTodo
