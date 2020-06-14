@@ -30,6 +30,7 @@ func (ctx Context) GetTasks(params operations.GetTasksParams) middleware.Respond
 func (ctx Context) CreateTask(params operations.CreateTaskParams) middleware.Responder {
 	task := models.Task{
 		Title: params.Body.Title,
+		ProjectID: params.Body.ProjectID,
 		Done:  false,
 	}
 

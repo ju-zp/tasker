@@ -1,6 +1,7 @@
 package projecthandlers
 
 import (
+	"fmt"
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/jinzhu/gorm"
 	"github.com/ju-zp/tasker/svc/models"
@@ -34,4 +35,11 @@ func (ctx *Context)CreateProject(params operations.CreateProjectParams) middlewa
 	}
 
 	return operations.NewCreateProjectOK().WithPayload("success")
+}
+
+// GetProject gets a single project by id and its associated tasks and todos
+func (ctx *Context)GetProject(params operations.GetProjectParams) middleware.Responder {
+	fmt.Println("here")
+
+	return operations.NewGetProjectOK()
 }

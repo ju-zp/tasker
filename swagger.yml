@@ -11,6 +11,12 @@ schemes:
 swagger: "2.0"
 #
 parameters:
+  path_projectId:
+    in: path
+    name: projectId
+    type: string
+    required: true
+    description: ID of a project
   path_taskId:
     in: path
     name: taskId
@@ -61,11 +67,25 @@ definitions:
         type: integer
         format: int64
         readOnly: true
+      projectId:
+        type: integer
+        format: int64
+        description: "project it is associated with"
       title:
         type: string
         description: "title of a task"
       done:
         type: boolean
+  taskTodos:
+    type: object
+    properties:
+      task:
+        $ref: "#/definitions/task"
+      todos:
+        type: array
+        description: Array of todos
+        items:
+          $ref: "#/definitions/todo"
   project:
     type: object
     required:
@@ -133,6 +153,24 @@ paths:
           schema:
             type: string
             description: success
+  /project/{projectId}:
+    get:
+      operationId: getProject
+      description: gets a project with its associated tasks and todos
+      parameters:
+        - $ref: "#/parameters/path_projectId"
+      responses:
+        200:
+          description: successful request
+          schema:
+            type: object
+            properties:
+              project:
+                $ref: "#/definitions/project"
+              tasks:
+                type: array
+                items:
+                  $ref: "#/definitions/taskTodos"
   /task:
     get:
       operationId: getTasks

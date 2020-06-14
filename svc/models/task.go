@@ -24,6 +24,9 @@ type Task struct {
 	// Read Only: true
 	ID int64 `json:"id,omitempty"`
 
+	// project it is associated with
+	ProjectID int64 `json:"projectId,omitempty"`
+
 	// title of a task
 	// Required: true
 	Title *string `json:"title"`

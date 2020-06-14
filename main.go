@@ -81,6 +81,7 @@ func main() {
 
 	api.GetProjectsHandler = operations.GetProjectsHandlerFunc(projectCtx.GetProjects)
 	api.CreateProjectHandler = operations.CreateProjectHandlerFunc(projectCtx.CreateProject)
+	api.GetProjectHandler = operations.GetProjectHandlerFunc(projectCtx.GetProject)
 
 	// serve API
 	if err := server.Serve(); err != nil {

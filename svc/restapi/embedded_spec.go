@@ -107,6 +107,36 @@ func init() {
         }
       }
     },
+    "/project/{projectId}": {
+      "get": {
+        "description": "gets a project with its associated tasks and todos",
+        "operationId": "getProject",
+        "parameters": [
+          {
+            "$ref": "#/parameters/path_projectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "project": {
+                  "$ref": "#/definitions/project"
+                },
+                "tasks": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/taskTodos"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/task": {
       "get": {
         "operationId": "getTasks",
@@ -374,9 +404,29 @@ func init() {
           "format": "int64",
           "readOnly": true
         },
+        "projectId": {
+          "description": "project it is associated with",
+          "type": "integer",
+          "format": "int64"
+        },
         "title": {
           "description": "title of a task",
           "type": "string"
+        }
+      }
+    },
+    "taskTodos": {
+      "type": "object",
+      "properties": {
+        "task": {
+          "$ref": "#/definitions/task"
+        },
+        "todos": {
+          "description": "Array of todos",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/todo"
+          }
         }
       }
     },
@@ -420,6 +470,13 @@ func init() {
     }
   },
   "parameters": {
+    "path_projectId": {
+      "type": "string",
+      "description": "ID of a project",
+      "name": "projectId",
+      "in": "path",
+      "required": true
+    },
     "path_taskId": {
       "type": "string",
       "description": "ID of a task",
@@ -526,6 +583,40 @@ func init() {
         }
       }
     },
+    "/project/{projectId}": {
+      "get": {
+        "description": "gets a project with its associated tasks and todos",
+        "operationId": "getProject",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ID of a project",
+            "name": "projectId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successful request",
+            "schema": {
+              "type": "object",
+              "properties": {
+                "project": {
+                  "$ref": "#/definitions/project"
+                },
+                "tasks": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/definitions/taskTodos"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/task": {
       "get": {
         "operationId": "getTasks",
@@ -813,9 +904,29 @@ func init() {
           "format": "int64",
           "readOnly": true
         },
+        "projectId": {
+          "description": "project it is associated with",
+          "type": "integer",
+          "format": "int64"
+        },
         "title": {
           "description": "title of a task",
           "type": "string"
+        }
+      }
+    },
+    "taskTodos": {
+      "type": "object",
+      "properties": {
+        "task": {
+          "$ref": "#/definitions/task"
+        },
+        "todos": {
+          "description": "Array of todos",
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/todo"
+          }
         }
       }
     },
@@ -859,6 +970,13 @@ func init() {
     }
   },
   "parameters": {
+    "path_projectId": {
+      "type": "string",
+      "description": "ID of a project",
+      "name": "projectId",
+      "in": "path",
+      "required": true
+    },
     "path_taskId": {
       "type": "string",
       "description": "ID of a task",
