@@ -13,7 +13,7 @@ import (
 	"github.com/ju-zp/tasker/svc/restapi/operations"
 )
 
-//go:generate swagger generate server --target ../../svc --name Tasker --spec ../../swagger.yml --model-package ../svc/models --skip-models --exclude-main
+//go:generate swagger generate server --target ../../svc --name Tasker --spec ../../swagger.yml --exclude-main
 
 func configureFlags(api *operations.TaskerAPI) {
 	// api.CommandLineOptionsGroups = []swag.CommandLineOptionsGroup{ ... }
@@ -33,9 +33,34 @@ func configureAPI(api *operations.TaskerAPI) http.Handler {
 
 	api.JSONProducer = runtime.JSONProducer()
 
+	if api.CreateProjectHandler == nil {
+		api.CreateProjectHandler = operations.CreateProjectHandlerFunc(func(params operations.CreateProjectParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.CreateProject has not yet been implemented")
+		})
+	}
+	if api.CreateTaskHandler == nil {
+		api.CreateTaskHandler = operations.CreateTaskHandlerFunc(func(params operations.CreateTaskParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.CreateTask has not yet been implemented")
+		})
+	}
+	if api.CreateTaskTodoHandler == nil {
+		api.CreateTaskTodoHandler = operations.CreateTaskTodoHandlerFunc(func(params operations.CreateTaskTodoParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.CreateTaskTodo has not yet been implemented")
+		})
+	}
 	if api.CreateTodoHandler == nil {
 		api.CreateTodoHandler = operations.CreateTodoHandlerFunc(func(params operations.CreateTodoParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.CreateTodo has not yet been implemented")
+		})
+	}
+	if api.DeleteTaskHandler == nil {
+		api.DeleteTaskHandler = operations.DeleteTaskHandlerFunc(func(params operations.DeleteTaskParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.DeleteTask has not yet been implemented")
+		})
+	}
+	if api.DeleteTodoHandler == nil {
+		api.DeleteTodoHandler = operations.DeleteTodoHandlerFunc(func(params operations.DeleteTodoParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.DeleteTodo has not yet been implemented")
 		})
 	}
 	if api.GetPingHandler == nil {
@@ -43,9 +68,29 @@ func configureAPI(api *operations.TaskerAPI) http.Handler {
 			return middleware.NotImplemented("operation operations.GetPing has not yet been implemented")
 		})
 	}
+	if api.GetProjectsHandler == nil {
+		api.GetProjectsHandler = operations.GetProjectsHandlerFunc(func(params operations.GetProjectsParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.GetProjects has not yet been implemented")
+		})
+	}
+	if api.GetTaskTodosHandler == nil {
+		api.GetTaskTodosHandler = operations.GetTaskTodosHandlerFunc(func(params operations.GetTaskTodosParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.GetTaskTodos has not yet been implemented")
+		})
+	}
+	if api.GetTasksHandler == nil {
+		api.GetTasksHandler = operations.GetTasksHandlerFunc(func(params operations.GetTasksParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.GetTasks has not yet been implemented")
+		})
+	}
 	if api.GetTodosHandler == nil {
 		api.GetTodosHandler = operations.GetTodosHandlerFunc(func(params operations.GetTodosParams) middleware.Responder {
 			return middleware.NotImplemented("operation operations.GetTodos has not yet been implemented")
+		})
+	}
+	if api.SetTodoStatusHandler == nil {
+		api.SetTodoStatusHandler = operations.SetTodoStatusHandlerFunc(func(params operations.SetTodoStatusParams) middleware.Responder {
+			return middleware.NotImplemented("operation operations.SetTodoStatus has not yet been implemented")
 		})
 	}
 

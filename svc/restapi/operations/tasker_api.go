@@ -62,8 +62,8 @@ func NewTaskerAPI(spec *loads.Document) *TaskerAPI {
 		GetPingHandler: GetPingHandlerFunc(func(params GetPingParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetPing has not yet been implemented")
 		}),
-		GetProjectHandler: GetProjectHandlerFunc(func(params GetProjectParams) middleware.Responder {
-			return middleware.NotImplemented("operation GetProject has not yet been implemented")
+		GetProjectsHandler: GetProjectsHandlerFunc(func(params GetProjectsParams) middleware.Responder {
+			return middleware.NotImplemented("operation GetProjects has not yet been implemented")
 		}),
 		GetTaskTodosHandler: GetTaskTodosHandlerFunc(func(params GetTaskTodosParams) middleware.Responder {
 			return middleware.NotImplemented("operation GetTaskTodos has not yet been implemented")
@@ -124,8 +124,8 @@ type TaskerAPI struct {
 	DeleteTodoHandler DeleteTodoHandler
 	// GetPingHandler sets the operation handler for the get ping operation
 	GetPingHandler GetPingHandler
-	// GetProjectHandler sets the operation handler for the get project operation
-	GetProjectHandler GetProjectHandler
+	// GetProjectsHandler sets the operation handler for the get projects operation
+	GetProjectsHandler GetProjectsHandler
 	// GetTaskTodosHandler sets the operation handler for the get task todos operation
 	GetTaskTodosHandler GetTaskTodosHandler
 	// GetTasksHandler sets the operation handler for the get tasks operation
@@ -221,8 +221,8 @@ func (o *TaskerAPI) Validate() error {
 	if o.GetPingHandler == nil {
 		unregistered = append(unregistered, "GetPingHandler")
 	}
-	if o.GetProjectHandler == nil {
-		unregistered = append(unregistered, "GetProjectHandler")
+	if o.GetProjectsHandler == nil {
+		unregistered = append(unregistered, "GetProjectsHandler")
 	}
 	if o.GetTaskTodosHandler == nil {
 		unregistered = append(unregistered, "GetTaskTodosHandler")
@@ -355,7 +355,7 @@ func (o *TaskerAPI) initHandlerCache() {
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/project"] = NewGetProject(o.context, o.GetProjectHandler)
+	o.handlers["GET"]["/project"] = NewGetProjects(o.context, o.GetProjectsHandler)
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}

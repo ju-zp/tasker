@@ -57,7 +57,7 @@ func init() {
     },
     "/project": {
       "get": {
-        "operationId": "getProject",
+        "operationId": "getProjects",
         "responses": {
           "200": {
             "description": "Get all the projects",
@@ -461,7 +461,7 @@ func init() {
     },
     "/project": {
       "get": {
-        "operationId": "getProject",
+        "operationId": "getProjects",
         "responses": {
           "200": {
             "description": "Get all the projects",

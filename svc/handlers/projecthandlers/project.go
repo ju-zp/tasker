@@ -11,6 +11,16 @@ type Context struct {
 	DB *gorm.DB
 }
 
+// GetProjects gets all the projects
+func (ctx *Context)GetProjects(params operations.GetProjectsParams) middleware.Responder {
+	var projects []*models.Project
+
+	ctx.DB.Find(&projects)
+
+	return operations.NewGetProjectsOK().WithPayload(projects)
+}
+
+// CreateProject creates a new project
 func (ctx *Context)CreateProject(params operations.CreateProjectParams) middleware.Responder {
 	project := models.Project{
 		Description: params.Body.Description,

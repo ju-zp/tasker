@@ -79,6 +79,7 @@ func main() {
 	api.CreateTaskTodoHandler = operations.CreateTaskTodoHandlerFunc(taskCtx.CreateTaskTodo)
 	api.DeleteTaskHandler = operations.DeleteTaskHandlerFunc(taskCtx.DeleteTask)
 
+	api.GetProjectsHandler = operations.GetProjectsHandlerFunc(projectCtx.GetProjects)
 	api.CreateProjectHandler = operations.CreateProjectHandlerFunc(projectCtx.CreateProject)
 
 	// serve API

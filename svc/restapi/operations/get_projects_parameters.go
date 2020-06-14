@@ -12,18 +12,18 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 )
 
-// NewGetProjectParams creates a new GetProjectParams object
+// NewGetProjectsParams creates a new GetProjectsParams object
 // no default values defined in spec.
-func NewGetProjectParams() GetProjectParams {
+func NewGetProjectsParams() GetProjectsParams {
 
-	return GetProjectParams{}
+	return GetProjectsParams{}
 }
 
-// GetProjectParams contains all the bound params for the get project operation
+// GetProjectsParams contains all the bound params for the get projects operation
 // typically these are obtained from a http.Request
 //
-// swagger:parameters getProject
-type GetProjectParams struct {
+// swagger:parameters getProjects
+type GetProjectsParams struct {
 
 	// HTTP Request Object
 	HTTPRequest *http.Request `json:"-"`
@@ -32,8 +32,8 @@ type GetProjectParams struct {
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
 // for simple values it will use straight method calls.
 //
-// To ensure default values, the struct must have been initialized with NewGetProjectParams() beforehand.
-func (o *GetProjectParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
+// To ensure default values, the struct must have been initialized with NewGetProjectsParams() beforehand.
+func (o *GetProjectsParams) BindRequest(r *http.Request, route *middleware.MatchedRoute) error {
 	var res []error
 
 	o.HTTPRequest = r

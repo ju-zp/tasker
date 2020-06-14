@@ -99,7 +99,7 @@ paths:
             description: Server is down
   /project:
     get:
-      operationId: getProject
+      operationId: getProjects
       responses:
         200:
           description: Get all the projects

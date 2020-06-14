@@ -13,14 +13,14 @@ import (
 	"github.com/ju-zp/tasker/svc/models"
 )
 
-// GetProjectOKCode is the HTTP code returned for type GetProjectOK
-const GetProjectOKCode int = 200
+// GetProjectsOKCode is the HTTP code returned for type GetProjectsOK
+const GetProjectsOKCode int = 200
 
-/*GetProjectOK Get all the projects
+/*GetProjectsOK Get all the projects
 
-swagger:response getProjectOK
+swagger:response getProjectsOK
 */
-type GetProjectOK struct {
+type GetProjectsOK struct {
 
 	/*array of all the projects
 	  In: Body
@@ -28,25 +28,25 @@ type GetProjectOK struct {
 	Payload []*models.Project `json:"body,omitempty"`
 }
 
-// NewGetProjectOK creates GetProjectOK with default headers values
-func NewGetProjectOK() *GetProjectOK {
+// NewGetProjectsOK creates GetProjectsOK with default headers values
+func NewGetProjectsOK() *GetProjectsOK {
 
-	return &GetProjectOK{}
+	return &GetProjectsOK{}
 }
 
-// WithPayload adds the payload to the get project o k response
-func (o *GetProjectOK) WithPayload(payload []*models.Project) *GetProjectOK {
+// WithPayload adds the payload to the get projects o k response
+func (o *GetProjectsOK) WithPayload(payload []*models.Project) *GetProjectsOK {
 	o.Payload = payload
 	return o
 }
 
-// SetPayload sets the payload to the get project o k response
-func (o *GetProjectOK) SetPayload(payload []*models.Project) {
+// SetPayload sets the payload to the get projects o k response
+func (o *GetProjectsOK) SetPayload(payload []*models.Project) {
 	o.Payload = payload
 }
 
 // WriteResponse to the client
-func (o *GetProjectOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
+func (o *GetProjectsOK) WriteResponse(rw http.ResponseWriter, producer runtime.Producer) {
 
 	rw.WriteHeader(200)
 	payload := o.Payload
