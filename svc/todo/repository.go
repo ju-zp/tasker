@@ -62,7 +62,6 @@ func (r *Repository) Delete(id string) error {
 	return err
 }
 
-
 func CreateRepository(db *gorm.DB) *Repository {
 	return &Repository{
 		DB: db,
