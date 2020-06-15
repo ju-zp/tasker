@@ -133,6 +133,10 @@ func (s *Suite) Test_Delete() {
 	s.mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tasks" WHERE (id = $1)`)).
 		WithArgs(id).
 		WillReturnRows(mockedRow)
+	s.mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "todos" WHERE (task_id = $1)`)).
+		WithArgs(int64(1)).
+		WillReturnRows(sqlmock.NewRows([]string{"id", "todo", "done", "task_id"}))
+	
 	s.mock.ExpectBegin()
 	s.mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "tasks" WHERE "tasks"."id" = $1`)).
 		WithArgs(int64(1)).

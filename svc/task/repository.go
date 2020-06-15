@@ -3,6 +3,7 @@ package task
 import (
 	"github.com/jinzhu/gorm"
 	"github.com/ju-zp/tasker/svc/models"
+	"github.com/ju-zp/tasker/svc/todo"
 )
 
 type Repository struct {
@@ -42,6 +43,21 @@ func (r *Repository) Delete(id string) error {
 
 	if err != nil {
 		return err
+	}
+
+	todoRepo := todo.CreateRepository(r.DB)
+
+	todos, err := todoRepo.FindByTaskId(task.ID)
+
+	if err != nil {
+		return err
+	}
+
+	for _, todo := range todos {
+		err := todoRepo.Delete(string(todo.ID))
+		if err != nil {
+			return nil
+		}
 	}
 
 	err = r.DB.Delete(&task).Error

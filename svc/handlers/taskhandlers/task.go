@@ -2,11 +2,9 @@ package taskhandlers
 
 import (
 	"fmt"
+	"github.com/ju-zp/tasker/svc/models"
 	"github.com/ju-zp/tasker/svc/task"
 	"github.com/ju-zp/tasker/svc/todo"
-	"strconv"
-
-	"github.com/ju-zp/tasker/svc/models"
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/jinzhu/gorm"
@@ -78,21 +76,12 @@ func (ctx Context) CreateTaskTodo(params operations.CreateTaskTodoParams) middle
 
 // DeleteTask deletes the given task and associated todos
 func (ctx Context) DeleteTask(params operations.DeleteTaskParams) middleware.Responder {
-	id, _ := strconv.Atoi(params.TaskID)
+	err := ctx.Repository.Delete(params.TaskID)
 
-	task := models.Task{
-		ID: int64(id),
+	if err != nil {
+		fmt.Println("Handle this error")
+		return nil
 	}
-
-	_ = ctx.DB.Find(&task).Error
-
-	var todos []*models.Todo
-
-	ctx.DB.Where("task_id = ?", params.TaskID).Find(&todos)
-
-	ctx.DB.Delete(&todos)
-
-	ctx.DB.Delete(&task)
 
 	return operations.NewDeleteTodoOK().WithPayload("Success")
 }
