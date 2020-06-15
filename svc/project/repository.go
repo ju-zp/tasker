@@ -19,12 +19,20 @@ func (r *Repository)Create(title string) error{
 	return r.DB.Create(&project).Error
 }
 
-func (p *Repository) Get(id string) (*models.Project, error) {
+func (r *Repository) Get(id string) (*models.Project, error) {
 	project := new(models.Project)
 
-	err := p.DB.Where("id = ?", id).Find(project).Error
+	err := r.DB.Where("id = ?", id).Find(project).Error
 
 	return project, err
+}
+
+func (r *Repository) GetAll() ([]*models.Project, error) {
+	var projects []*models.Project
+
+	err := r.DB.Find(&projects).Error
+
+	return projects, err
 }
 
 func CreateRepository(db *gorm.DB) *Repository {

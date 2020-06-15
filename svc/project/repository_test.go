@@ -4,6 +4,7 @@ import (
 	"database/sql"
 	"fmt"
 	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/go-test/deep"
 	"github.com/jinzhu/gorm"
 	"github.com/ju-zp/tasker/svc/models"
 	"github.com/stretchr/testify/require"
@@ -45,26 +46,6 @@ func (s *Suite) AfterTest(_, _ string) {
 func TestInit(t *testing.T) {
 	suite.Run(t, new(Suite))
 }
-//
-//func (s *Suite) Test_repository_Get() {
-//	var (
-//		id   = "1"
-//		title = "test-name"
-//	)
-//
-//	s.mock.ExpectQuery(regexp.QuoteMeta(
-//		`SELECT * FROM "project" WHERE (id = $1)`)).
-//		WithArgs(id).
-//		WillReturnRows(sqlmock.NewRows([]string{"id", "title"}).
-//			AddRow(id, title))
-//
-//	res, err := s.repository.Get(id)
-//
-//		fmt.Println(err)
-//
-//	require.NoError(s.T(), err)
-//	require.Nil(s.T(), deep.Equal(&models.Project{ID: 1, Title: &title}, res))
-//}
 
 func (s *Suite) Test_repository_Create() {
 	var (
@@ -81,4 +62,46 @@ func (s *Suite) Test_repository_Create() {
 	err := s.repository.Create(title)
 
 	require.NoError(s.T(), err)
+}
+
+func (s *Suite) Test_repository_Get() {
+	var (
+		id   = "1"
+		title = "test-name"
+		description = "test-description"
+	)
+
+	s.mock.ExpectQuery(regexp.QuoteMeta(
+		`SELECT * FROM "projects" WHERE (id = $1)`)).
+		WithArgs(id).
+		WillReturnRows(sqlmock.NewRows([]string{"id", "title", "description"}).
+			AddRow(id, title, description))
+
+	res, err := s.repository.Get(id)
+
+	require.NoError(s.T(), err)
+	require.Nil(s.T(), deep.Equal(&models.Project{ID: 1, Title: &title, Description: &description}, res))
+}
+
+func (s *Suite) Test_repository_GetAll() {
+	var (
+		id1   = "1"
+		title1 = "test-name"
+		description1 = "test-description"
+		id2   = "2"
+		title2 = "test-name1"
+		description2 = "test-description1"
+	)
+
+	s.mock.ExpectQuery(regexp.QuoteMeta(
+		`SELECT * FROM "projects"`)).
+		WillReturnRows(sqlmock.NewRows([]string{"id", "title", "description"}).
+			AddRow(id1, title1, description1).
+			AddRow(id2, title2, description2))
+
+	res, err := s.repository.GetAll()
+
+	require.NoError(s.T(), err)
+	require.Nil(s.T(), deep.Equal(&models.Project{ID: 1, Title: &title1, Description: &description1}, res[0]))
+	require.Nil(s.T(), deep.Equal(&models.Project{ID: 2, Title: &title2, Description: &description2}, res[1]))
 }
