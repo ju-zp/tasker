@@ -17,8 +17,9 @@ func FindByID(ID string, DB *gorm.DB) (*models.Project, []*models.TaskTodos){
 		fmt.Println("good luck son")
 	}
 
-	_, err = task.FindByProjectID(ID, DB)
+	//_, err = task.FindByProjectID(ID, DB)
 
+	_, err = task.CreateRepository(DB).FindByProjectId(project.ID)
 	var taskTodos []*models.TaskTodos
 
 	//if len(tasks) > 0 {
