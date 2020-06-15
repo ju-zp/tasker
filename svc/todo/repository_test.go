@@ -118,3 +118,62 @@ func (s *Suite) Test_FindByTaskId() {
 	require.Nil(s.T(), deep.Equal(&models.Todo{ID: 3, Todo: &content3, TaskID: taskId, Done: &done}, res[2]))
 }
 
+func (s *Suite) Test_UpdateStatus() {
+	var (
+		id = "1"
+		content = "test-todo"
+		taskId = int64(3)
+		done = false
+	)
+
+	mockedRow := sqlmock.NewRows([]string{"id","todo","task_id","done"}).
+		AddRow(id, content, taskId, done)
+
+	s.mock.ExpectQuery(regexp.QuoteMeta(
+		`SELECT * FROM "todos" WHERE (id = $1)`)).
+		WithArgs(id).
+		WillReturnRows(mockedRow)
+
+	s.mock.ExpectBegin()
+
+	s.mock.ExpectExec(regexp.QuoteMeta(`UPDATE "todos" SET "done" = $1, "task_id" = $2, "todo" = $3 WHERE "todos"."id" = $4`)).
+		WithArgs(true, taskId, content, int64(1)).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+
+	s.mock.ExpectCommit()
+
+	err := s.repository.UpdateStatus(id, true)
+
+	require.NoError(s.T(), err)
+}
+
+func (s *Suite) Test_Delete() {
+	var (
+		id = "1"
+		content = "test-todo"
+		taskId = int64(3)
+		done = false
+	)
+
+	mockedRow := sqlmock.NewRows([]string{"id","todo","task_id","done"}).
+		AddRow(id, content, taskId, done)
+
+	s.mock.ExpectQuery(regexp.QuoteMeta(
+		`SELECT * FROM "todos" WHERE (id = $1)`)).
+		WithArgs(id).
+		WillReturnRows(mockedRow)
+
+	s.mock.ExpectBegin()
+
+	s.mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "todos" WHERE "todos"."id" = $1`)).
+		WithArgs(int64(1)).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+
+	s.mock.ExpectCommit()
+
+	err := s.repository.Delete(id)
+
+	require.NoError(s.T(), err)
+}
+
+

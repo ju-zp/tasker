@@ -2,7 +2,7 @@ package taskhandlers
 
 import (
 	"fmt"
-	"github.com/go-openapi/swag"
+	"github.com/ju-zp/tasker/svc/todo"
 	"strconv"
 
 	"github.com/ju-zp/tasker/svc/models"
@@ -54,9 +54,12 @@ func (ctx Context) GetTaskTodos(params operations.GetTaskTodosParams) middleware
 
 	ctx.DB.Find(&task)
 
-	var todos []*models.Todo
+	todos, err := todo.CreateRepository(ctx.DB).FindByTaskId(task.ID)
 
-	ctx.DB.Where("task_id = ?", params.TaskID).Find(&todos)
+	if err != nil {
+		fmt.Println("Handle this error")
+		return nil
+	}
 
 	return operations.NewGetTaskTodosOK().WithPayload(&operations.GetTaskTodosOKBody{
 		Task:  &task,
@@ -78,13 +81,7 @@ func (ctx Context) CreateTaskTodo(params operations.CreateTaskTodoParams) middle
 		return nil
 	}
 
-	todo := models.Todo{
-		Todo: &params.Body.Todo,
-		TaskID: task.ID,
-		Done: swag.Bool(false),
-	}
-
-	err = ctx.DB.Create(&todo).Error
+	err = todo.CreateRepository(ctx.DB).Create(&params.Body.Todo, task.ID)
 
 	if err != nil {
 		fmt.Println("unable to save todo")

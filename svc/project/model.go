@@ -5,7 +5,6 @@ import (
 	"github.com/jinzhu/gorm"
 	"github.com/ju-zp/tasker/svc/models"
 	"github.com/ju-zp/tasker/svc/task"
-	"github.com/ju-zp/tasker/svc/todo"
 	"strconv"
 )
 
@@ -18,20 +17,20 @@ func FindByID(ID string, DB *gorm.DB) (*models.Project, []*models.TaskTodos){
 		fmt.Println("good luck son")
 	}
 
-	tasks, err := task.FindByProjectID(ID, DB)
+	_, err = task.FindByProjectID(ID, DB)
 
 	var taskTodos []*models.TaskTodos
 
-	if len(tasks) > 0 {
-		for _, task := range tasks {
-			todos, _ := todo.FindByTaskID(string(task.ID), DB)
-			taskTodo := models.TaskTodos{
-				Task:  task,
-				Todos: todos,
-			}
-			taskTodos = append(taskTodos, &taskTodo)
-		}
-	}
+	//if len(tasks) > 0 {
+	//	for _, task := range tasks {
+	//		todos, _ := todo.FindByTaskID(string(task.ID), DB)
+	//		taskTodo := models.TaskTodos{
+	//			Task:  task,
+	//			Todos: todos,
+	//		}
+	//		taskTodos = append(taskTodos, &taskTodo)
+	//	}
+	//}
 
 	return project, taskTodos
 }
