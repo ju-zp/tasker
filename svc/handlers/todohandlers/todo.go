@@ -3,19 +3,17 @@ package todohandlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/swag"
-	"github.com/jinzhu/gorm"
 	"github.com/ju-zp/tasker/svc/restapi/operations"
 	"github.com/ju-zp/tasker/svc/todo"
 )
 
 type Context struct {
-	DB *gorm.DB
+	Repository *todo.Repository
 }
 
 // SetTodoStatus updates the done field kfo a given todo
 func (ctx *Context)SetTodoStatus(params operations.SetTodoStatusParams) middleware.Responder {
-
-	err := todo.CreateRepository(ctx.DB).UpdateStatus(params.TodoID, swag.BoolValue(params.Body.Status))
+	err := ctx.Repository.UpdateStatus(params.TodoID, swag.BoolValue(params.Body.Status))
 
 	if err != nil {
 		return nil
@@ -26,7 +24,7 @@ func (ctx *Context)SetTodoStatus(params operations.SetTodoStatusParams) middlewa
 
 // DeleteTodo delete the todo
 func (ctx *Context)DeleteTodo(params operations.DeleteTodoParams) middleware.Responder {
-	err := todo.CreateRepository(ctx.DB).Delete(params.TodoID)
+	err := ctx.Repository.Delete(params.TodoID)
 
 	if err != nil {
 		return nil
