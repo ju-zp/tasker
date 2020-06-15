@@ -3,6 +3,7 @@ package task
 import (
 	"database/sql"
 	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/go-test/deep"
 	"github.com/jinzhu/gorm"
 	"github.com/ju-zp/tasker/svc/models"
 	"github.com/stretchr/testify/require"
@@ -47,12 +48,13 @@ func TestInit(t *testing.T) {
 
 func (s *Suite)Test_Create() {
 	var (
+		id = "1"
 		title = "test-task"
 		projectId =int64(5)
 	)
 
 	mockedRow :=  sqlmock.NewRows([]string{"id"}).
-		AddRow("1")
+		AddRow(id)
 
 	s.mock.ExpectBegin()
 	s.mock.ExpectQuery(regexp.QuoteMeta(`INSERT INTO "tasks" ("done","project_id","title") VALUES ($1,$2,$3) RETURNING "tasks"."id"`)).
@@ -63,4 +65,26 @@ func (s *Suite)Test_Create() {
 	err := s.repository.Create(&title, projectId)
 
 	require.NoError(s.T(), err)
+}
+
+func (s *Suite)Test_Find() {
+	var (
+		id = "1"
+		title = "test-task"
+		projectId = int64(5)
+		done = false
+	)
+
+	mockedRow :=  sqlmock.NewRows([]string{"id", "title", "done", "project_id"}).
+		AddRow(id, title, done, projectId)
+
+	s.mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tasks" WHERE (id = $1)`)).
+		WithArgs(id).
+		WillReturnRows(mockedRow)
+
+	res, err := s.repository.Find(id)
+
+	require.NoError(s.T(), err)
+	require.Nil(s.T(), deep.Equal(&models.Task{ID: 1, Title: &title, ProjectID: projectId, Done: done}, res))
+
 }
