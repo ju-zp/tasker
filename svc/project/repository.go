@@ -9,11 +9,10 @@ type Repository struct {
 	DB *gorm.DB
 }
 
-func (r *Repository)Create(title string) error{
-	test := "here"
+func (r *Repository)Create(title *string, description *string) error{
 	project := models.Project{
-		Title: &title,
-		Description: &test,
+		Title: title,
+		Description: description,
 	}
 
 	return r.DB.Create(&project).Error

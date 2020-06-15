@@ -6,8 +6,6 @@ import (
 "strconv"
 )
 
-type Task models.Task
-
 func Find(ID string, DB *gorm.DB) (*models.Todo, error) {
 	id, _ := strconv.Atoi(ID)
 

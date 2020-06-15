@@ -2,6 +2,7 @@ package main
 
 import (
 	"flag"
+	"github.com/ju-zp/tasker/svc/project"
 	"log"
 	"os"
 	"strconv"
@@ -51,6 +52,7 @@ func main() {
 
 	projectCtx := &projecthandlers.Context{
 		DB: db,
+		Repository: project.CreateRepository(db),
 	}
 	todoCtx := &todohandlers.Context{
 		DB: db,

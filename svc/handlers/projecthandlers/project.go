@@ -3,32 +3,31 @@ package projecthandlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/jinzhu/gorm"
-	"github.com/ju-zp/tasker/svc/models"
 	"github.com/ju-zp/tasker/svc/project"
 	"github.com/ju-zp/tasker/svc/restapi/operations"
 )
 
 type Context struct {
 	DB *gorm.DB
+	Repository *project.Repository
 }
 
 // GetProjects gets all the projects
 func (ctx *Context)GetProjects(params operations.GetProjectsParams) middleware.Responder {
-	var projects []*models.Project
+	projects, err := ctx.Repository.GetAll()
 
-	ctx.DB.Find(&projects)
+	if err != nil {
+		return nil
+	}
 
 	return operations.NewGetProjectsOK().WithPayload(projects)
 }
 
 // CreateProject creates a new project
 func (ctx *Context)CreateProject(params operations.CreateProjectParams) middleware.Responder {
-	project := models.Project{
-		Description: &params.Body.Description,
-		Title:       params.Body.Title,
-	}
+	repo := project.CreateRepository(ctx.DB)
 
-	err := ctx.DB.Create(&project).Error
+	err := repo.Create(params.Body.Title, &params.Body.Description)
 
 	if err != nil {
 		return nil

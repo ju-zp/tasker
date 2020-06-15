@@ -2,7 +2,6 @@ package project
 
 import (
 	"database/sql"
-	"fmt"
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/go-test/deep"
 	"github.com/jinzhu/gorm"
@@ -59,7 +58,7 @@ func (s *Suite) Test_repository_Create() {
 	s.mock.ExpectQuery(regexp.QuoteMeta(`INSERT INTO "projects" ("description","title") VALUES ($1,$2) RETURNING "projects"."id"`)).WithArgs(description,title).WillReturnRows(mockedRow)
 	s.mock.ExpectCommit()
 
-	err := s.repository.Create(title)
+	err := s.repository.Create(&title, &description)
 
 	require.NoError(s.T(), err)
 }
