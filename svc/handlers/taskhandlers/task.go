@@ -2,6 +2,7 @@ package taskhandlers
 
 import (
 	"fmt"
+	"github.com/ju-zp/tasker/svc/task"
 	"github.com/ju-zp/tasker/svc/todo"
 	"strconv"
 
@@ -15,6 +16,7 @@ import (
 // Context for task handlers
 type Context struct {
 	DB *gorm.DB
+	Repository *task.Repository
 }
 
 // GetTasks gets all the tasks
@@ -28,31 +30,19 @@ func (ctx Context) GetTasks(params operations.GetTasksParams) middleware.Respond
 
 // CreateTask creates a task
 func (ctx Context) CreateTask(params operations.CreateTaskParams) middleware.Responder {
-	task := models.Task{
-		Title: params.Body.Title,
-		ProjectID: params.Body.ProjectID,
-		Done:  false,
-	}
-
-	err := ctx.DB.Create(&task).Error
+	task, err := ctx.Repository.Create(params.Body.Title, params.Body.ProjectID)
 
 	if err != nil {
-		fmt.Println("unable to save task")
-		fmt.Println("error: ", err.Error())
+		fmt.Println("Handle this error")
+		return nil
 	}
 
-	return operations.NewCreateTaskOK().WithPayload(&task)
+	return operations.NewCreateTaskOK().WithPayload(task)
 }
 
 // GetTaskTodos gets the task and the associated todos
 func (ctx Context) GetTaskTodos(params operations.GetTaskTodosParams) middleware.Responder {
-	id, _ := strconv.Atoi(params.TaskID)
-
-	task := models.Task{
-		ID: int64(id),
-	}
-
-	ctx.DB.Find(&task)
+	task, err := ctx.Repository.Find(params.TaskID)
 
 	todos, err := todo.CreateRepository(ctx.DB).FindByTaskId(task.ID)
 
@@ -62,30 +52,25 @@ func (ctx Context) GetTaskTodos(params operations.GetTaskTodosParams) middleware
 	}
 
 	return operations.NewGetTaskTodosOK().WithPayload(&operations.GetTaskTodosOKBody{
-		Task:  &task,
+		Task:  task,
 		Todos: todos,
 	})
 }
 
 // CreateTaskTodo creates a todo for a given task
 func (ctx Context) CreateTaskTodo(params operations.CreateTaskTodoParams) middleware.Responder {
-	id, _ := strconv.Atoi(params.TaskID)
-
-	task := models.Task{
-		ID: int64(id),
-	}
-
-	err := ctx.DB.Find(&task).Error
+	task, err := ctx.Repository.Find(params.TaskID)
 
 	if err != nil {
+		fmt.Println("Handle this error")
 		return nil
 	}
 
 	err = todo.CreateRepository(ctx.DB).Create(&params.Body.Todo, task.ID)
 
 	if err != nil {
-		fmt.Println("unable to save todo")
-		fmt.Println("error: ", err.Error())
+		fmt.Println("Handle this error")
+		return nil
 	}
 
 	return operations.NewCreateTaskTodoOK().WithPayload("success")

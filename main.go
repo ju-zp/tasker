@@ -3,6 +3,7 @@ package main
 import (
 	"flag"
 	"github.com/ju-zp/tasker/svc/project"
+	"github.com/ju-zp/tasker/svc/task"
 	"github.com/ju-zp/tasker/svc/todo"
 	"log"
 	"os"
@@ -60,6 +61,7 @@ func main() {
 	}
 	taskCtx := &taskhandlers.Context{
 		DB: db,
+		Repository: task.CreateRepository(db),
 	}
 	// parse flags
 	flag.Parse()
