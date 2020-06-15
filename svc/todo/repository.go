@@ -20,7 +20,7 @@ func (r *Repository)Create(content *string, taskID int64) error{
 	return r.DB.Create(&todo).Error
 }
 
-func (r *Repository) Get(id string) (*models.Todo, error) {
+func (r *Repository)Find(id string) (*models.Todo, error) {
 	todo := models.Todo{}
 
 	err := r.DB.Where("id = ?", id).Find(&todo).Error
@@ -28,10 +28,10 @@ func (r *Repository) Get(id string) (*models.Todo, error) {
 	return &todo, err
 }
 
-func (r *Repository) GetAll() ([]*models.Todo, error) {
+func (r *Repository)FindByTaskId(taskId int64) ([]*models.Todo, error) {
 	var todos []*models.Todo
 
-	err := r.DB.Find(&todos).Error
+	err := r.DB.Where("task_id = ?", taskId).Find(&todos).Error
 
 	return todos, err
 }

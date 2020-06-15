@@ -3,6 +3,7 @@ package todo
 import (
 	"database/sql"
 	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/go-test/deep"
 	"github.com/jinzhu/gorm"
 	"github.com/ju-zp/tasker/svc/models"
 	"github.com/stretchr/testify/require"
@@ -51,13 +52,69 @@ func (s *Suite) Test_repository_Create() {
 		taskId = int64(2)
 	)
 
-	mockedRow := sqlmock.NewRows([]string{"id"}).AddRow("1")
+	mockedRow := sqlmock.NewRows([]string{"id"}).
+		AddRow("1")
 
 	s.mock.ExpectBegin()
-	s.mock.ExpectQuery(regexp.QuoteMeta(`INSERT INTO "todos" ("done","task_id","todo") VALUES ($1,$2,$3) RETURNING "todos"."id"`)).WithArgs(false, taskId, content).WillReturnRows(mockedRow)
+	s.mock.ExpectQuery(regexp.QuoteMeta(`INSERT INTO "todos" ("done","task_id","todo") VALUES ($1,$2,$3) RETURNING "todos"."id"`)).
+		WithArgs(false, taskId, content).
+		WillReturnRows(mockedRow)
 	s.mock.ExpectCommit()
 
 	err := s.repository.Create(&content, taskId)
 
 	require.NoError(s.T(), err)
 }
+
+func (s *Suite) Test_repository_Find() {
+	var (
+		id   = "1"
+		content = "test-todo"
+		taskId = int64(3)
+		done = false
+	)
+
+	mockedRow := sqlmock.NewRows([]string{"id","todo","task_id","done"}).
+		AddRow(id, content, taskId, done)
+
+	s.mock.ExpectQuery(regexp.QuoteMeta(
+		`SELECT * FROM "todos" WHERE (id = $1)`)).
+		WithArgs(id).
+		WillReturnRows(mockedRow)
+
+	res, err := s.repository.Find(id)
+
+	require.NoError(s.T(), err)
+	require.Nil(s.T(), deep.Equal(&models.Todo{ID: 1, Todo: &content, TaskID: taskId, Done: &done}, res))
+}
+
+func (s *Suite) Test_FindByTaskId() {
+	var (
+		id = "1"
+		content = "test-todo"
+		taskId = int64(3)
+		done = false
+		id2 = "2"
+		content2 = "test-todo2"
+		id3 = "3"
+		content3 = "test-todo3"
+	)
+
+	mockedRows := sqlmock.NewRows([]string{"id", "todo", "task_id", "done"}).
+		AddRow(id, content, taskId, done).
+		AddRow(id2, content2, taskId, done).
+		AddRow(id3, content3, taskId, done)
+
+	s.mock.ExpectQuery(regexp.QuoteMeta(
+		`SELECT * FROM "todos" WHERE (task_id = $1)`)).
+		WithArgs(taskId).
+		WillReturnRows(mockedRows)
+
+	res, err := s.repository.FindByTaskId(taskId)
+
+	require.NoError(s.T(), err)
+	require.Nil(s.T(), deep.Equal(&models.Todo{ID: 1, Todo: &content, TaskID: taskId, Done: &done}, res[0]))
+	require.Nil(s.T(), deep.Equal(&models.Todo{ID: 2, Todo: &content2, TaskID: taskId, Done: &done}, res[1]))
+	require.Nil(s.T(), deep.Equal(&models.Todo{ID: 3, Todo: &content3, TaskID: taskId, Done: &done}, res[2]))
+}
+
