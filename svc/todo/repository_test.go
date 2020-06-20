@@ -147,6 +147,23 @@ func (s *Suite) Test_UpdateStatus() {
 	require.NoError(s.T(), err)
 }
 
+func (s *Suite) Test_DeleteByTodo() {
+	content := "test-todo"
+	todo := &models.Todo{
+		ID: 1,
+		Todo: &content,
+		TaskID: 2,
+	}
+
+	s.mock.ExpectBegin()
+	s.mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "todos" WHERE "todos"."id" = $1`)).
+		WithArgs(todo.ID).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+	s.mock.ExpectCommit()
+
+	s.repository.DeleteByTodo(todo)
+}
+
 func (s *Suite) Test_Delete() {
 	var (
 		id = "1"

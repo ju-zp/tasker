@@ -119,6 +119,39 @@ func (s *Suite) Test_FindByProjectId() {
 	require.Nil(s.T(), deep.Equal(&models.Task{ID: 3, Title: &title3, ProjectID: projectId, Done: done}, res[2]))
 }
 
+func (s *Suite) Test_DeleteByTask() {
+	title := "test-title"
+	task := &models.Task{
+		Done:      false,
+		ID:        1,
+		ProjectID: 2,
+		Title:     &title,
+	}
+
+	mockedRows := sqlmock.NewRows([]string{"id", "todo", "task_id", "done"}).
+		AddRow(2, "test-todo", task.ID, false)
+
+	s.mock.ExpectQuery(regexp.QuoteMeta(
+		`SELECT * FROM "todos" WHERE (task_id = $1)`)).
+		WithArgs(task.ID).
+		WillReturnRows(mockedRows)
+
+	s.mock.ExpectBegin()
+	s.mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "todos" WHERE "todos"."id" = $1`)).
+		WithArgs(2).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+	s.mock.ExpectCommit()
+
+	s.mock.ExpectBegin()
+	s.mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "tasks" WHERE "tasks"."id" = $1`)).
+		WithArgs(task.ID).
+		WillReturnResult(sqlmock.NewResult(1, 1))
+	s.mock.ExpectCommit()
+
+	err := s.repository.DeleteByTask(task)
+	require.NoError(s.T(), err)
+}
+
 func (s *Suite) Test_Delete() {
 	var (
 		id = "1"
