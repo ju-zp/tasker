@@ -14,8 +14,7 @@ type Context struct {
 
 // GetProjects gets all the projects
 func (ctx *Context)GetProjects(params operations.GetProjectsParams) middleware.Responder {
-	projects, err := ctx.Repository.GetAll()
-
+	projects, err := ctx.Repository.FindAll()
 	if err != nil {
 		return nil
 	}
@@ -25,10 +24,7 @@ func (ctx *Context)GetProjects(params operations.GetProjectsParams) middleware.R
 
 // CreateProject creates a new project
 func (ctx *Context)CreateProject(params operations.CreateProjectParams) middleware.Responder {
-	repo := project.CreateRepository(ctx.DB)
-
-	err := repo.Create(params.Body.Title, &params.Body.Description)
-
+	err := ctx.Repository.Create(params.Body.Title, &params.Body.Description)
 	if err != nil {
 		return nil
 	}
@@ -38,7 +34,10 @@ func (ctx *Context)CreateProject(params operations.CreateProjectParams) middlewa
 
 // GetProject gets a single project by id and its associated tasks and todos
 func (ctx *Context)GetProject(params operations.GetProjectParams) middleware.Responder {
-	project, taskTodos := project.FindByID(params.ProjectID, ctx.DB)
+	project, taskTodos, err := ctx.Repository.FindByID(params.ProjectID)
+	if err != nil {
+		return nil
+	}
 
 	return operations.NewGetProjectOK().WithPayload(&operations.GetProjectOKBody{
 		Project: project,
