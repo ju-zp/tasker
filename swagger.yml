@@ -204,7 +204,17 @@ paths:
         - name: body
           in: body
           schema:
-            $ref: "#/definitions/task"
+            type: object
+            required:
+              - title
+              - projectId
+            properties:
+              title:
+                type: string
+                description: Title of task
+              projectId:
+                type: string
+                description: id of project task belongs to
       responses:
         200:
           description: Created task

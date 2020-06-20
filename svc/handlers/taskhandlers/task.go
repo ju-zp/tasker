@@ -2,9 +2,11 @@ package taskhandlers
 
 import (
 	"fmt"
+	"github.com/go-openapi/swag"
 	"github.com/ju-zp/tasker/svc/models"
 	"github.com/ju-zp/tasker/svc/task"
 	"github.com/ju-zp/tasker/svc/todo"
+	"strconv"
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/jinzhu/gorm"
@@ -28,7 +30,8 @@ func (ctx Context) GetTasks(params operations.GetTasksParams) middleware.Respond
 
 // CreateTask creates a task
 func (ctx Context) CreateTask(params operations.CreateTaskParams) middleware.Responder {
-	task, err := ctx.Repository.Create(params.Body.Title, params.Body.ProjectID)
+	projectId, err := strconv.Atoi(swag.StringValue(params.Body.ProjectID))
+	task, err := ctx.Repository.Create(params.Body.Title, int64(projectId))
 
 	if err != nil {
 		fmt.Println("Handle this error")
@@ -63,7 +66,6 @@ func (ctx Context) CreateTaskTodo(params operations.CreateTaskTodoParams) middle
 		fmt.Println("Handle this error")
 		return nil
 	}
-
 	err = todo.CreateRepository(ctx.DB).Create(&params.Body.Todo, task.ID)
 
 	if err != nil {

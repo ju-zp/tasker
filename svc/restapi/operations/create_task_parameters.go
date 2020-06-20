@@ -11,8 +11,6 @@ import (
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime"
 	"github.com/go-openapi/runtime/middleware"
-
-	"github.com/ju-zp/tasker/svc/models"
 )
 
 // NewCreateTaskParams creates a new CreateTaskParams object
@@ -34,7 +32,7 @@ type CreateTaskParams struct {
 	/*
 	  In: body
 	*/
-	Body *models.Task
+	Body CreateTaskBody
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -48,7 +46,7 @@ func (o *CreateTaskParams) BindRequest(r *http.Request, route *middleware.Matche
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
-		var body models.Task
+		var body CreateTaskBody
 		if err := route.Consumer.Consume(r.Body, &body); err != nil {
 			res = append(res, errors.NewParseError("body", "body", "", err))
 		} else {
@@ -58,7 +56,7 @@ func (o *CreateTaskParams) BindRequest(r *http.Request, route *middleware.Matche
 			}
 
 			if len(res) == 0 {
-				o.Body = &body
+				o.Body = body
 			}
 		}
 	}

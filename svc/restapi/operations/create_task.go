@@ -8,7 +8,11 @@ package operations
 import (
 	"net/http"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/strfmt"
+	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // CreateTaskHandlerFunc turns a function with the right signature into a create task handler
@@ -55,4 +59,72 @@ func (o *CreateTask) ServeHTTP(rw http.ResponseWriter, r *http.Request) {
 
 	o.Context.Respond(rw, r, route.Produces, route, res)
 
+}
+
+// CreateTaskBody create task body
+//
+// swagger:model CreateTaskBody
+type CreateTaskBody struct {
+
+	// id of project task belongs to
+	// Required: true
+	ProjectID *string `json:"projectId"`
+
+	// Title of task
+	// Required: true
+	Title *string `json:"title"`
+}
+
+// Validate validates this create task body
+func (o *CreateTaskBody) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := o.validateProjectID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if err := o.validateTitle(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (o *CreateTaskBody) validateProjectID(formats strfmt.Registry) error {
+
+	if err := validate.Required("body"+"."+"projectId", "body", o.ProjectID); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (o *CreateTaskBody) validateTitle(formats strfmt.Registry) error {
+
+	if err := validate.Required("body"+"."+"title", "body", o.Title); err != nil {
+		return err
+	}
+
+	return nil
+}
+
+// MarshalBinary interface implementation
+func (o *CreateTaskBody) MarshalBinary() ([]byte, error) {
+	if o == nil {
+		return nil, nil
+	}
+	return swag.WriteJSON(o)
+}
+
+// UnmarshalBinary interface implementation
+func (o *CreateTaskBody) UnmarshalBinary(b []byte) error {
+	var res CreateTaskBody
+	if err := swag.ReadJSON(b, &res); err != nil {
+		return err
+	}
+	*o = res
+	return nil
 }

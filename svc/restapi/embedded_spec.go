@@ -185,7 +185,21 @@ func init() {
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/task"
+              "type": "object",
+              "required": [
+                "title",
+                "projectId"
+              ],
+              "properties": {
+                "projectId": {
+                  "description": "id of project task belongs to",
+                  "type": "string"
+                },
+                "title": {
+                  "description": "Title of task",
+                  "type": "string"
+                }
+              }
             }
           }
         ],
@@ -636,7 +650,21 @@ func init() {
             "name": "body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/task"
+              "type": "object",
+              "required": [
+                "title",
+                "projectId"
+              ],
+              "properties": {
+                "projectId": {
+                  "description": "id of project task belongs to",
+                  "type": "string"
+                },
+                "title": {
+                  "description": "Title of task",
+                  "type": "string"
+                }
+              }
             }
           }
         ],
