@@ -80,7 +80,7 @@ func (r *Repository) DeleteById(id string) error {
 
 	if len(tasks) > 0 {
 		for _, task := range tasks {
-			err = taskRepository.Delete(string(task.ID))
+			err = taskRepository.DeleteByTask(task)
 		}
 	}
 

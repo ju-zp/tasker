@@ -50,6 +50,12 @@ func (r *Repository) UpdateStatus(id string, status bool) error {
 	return err
 }
 
+func (r *Repository) DeleteByTodo(todo *models.Todo) error {
+	err := r.DB.Delete(todo).Error
+
+	return err
+}
+
 func (r *Repository) Delete(id string) error {
 	todo, err := r.Find(id)
 
@@ -57,7 +63,7 @@ func (r *Repository) Delete(id string) error {
 		return err
 	}
 
-	err = r.DB.Delete(todo).Error
+	err = r.DeleteByTodo(todo)
 
 	return err
 }

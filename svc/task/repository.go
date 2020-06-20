@@ -38,13 +38,7 @@ func (r *Repository) FindByProjectId(projectId int64) ([]*models.Task, error) {
 	return tasks, err
 }
 
-func (r *Repository) Delete(id string) error {
-	task, err := r.Find(id)
-
-	if err != nil {
-		return err
-	}
-
+func (r *Repository) DeleteByTask(task *models.Task) error {
 	todoRepo := todo.CreateRepository(r.DB)
 
 	todos, err := todoRepo.FindByTaskId(task.ID)
@@ -54,13 +48,25 @@ func (r *Repository) Delete(id string) error {
 	}
 
 	for _, todo := range todos {
-		err := todoRepo.Delete(string(todo.ID))
+		err := todoRepo.DeleteByTodo(todo)
 		if err != nil {
 			return nil
 		}
 	}
 
 	err = r.DB.Delete(&task).Error
+
+	return err
+}
+
+func (r *Repository) Delete(id string) error {
+	task, err := r.Find(id)
+
+	if err != nil {
+		return err
+	}
+
+	err = r.DeleteByTask(task)
 
 	return err
 }

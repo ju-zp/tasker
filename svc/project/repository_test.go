@@ -151,3 +151,65 @@ func (s *Suite) Test_FindByID() {
 	require.Nil(s.T(), deep.Equal(&models.Todo{ID: 1, Todo: &content, TaskID: 2, Done: &done}, taskTodos[0].Todos[0]))
 }
 
+func (s *Suite) Test_DeleteById() {
+	var (
+		projectId   = "1"
+		title = "test-name"
+		description = "test-description"
+		taskId = "2"
+		done = false
+		todoId = "1"
+		content = "test-todo"
+	)
+
+	s.mock.ExpectQuery(regexp.QuoteMeta(
+		`SELECT * FROM "projects" WHERE (id = $1)`)).
+		WithArgs(projectId).
+		WillReturnRows(sqlmock.NewRows([]string{"id", "title", "description"}).
+			AddRow(projectId, title, description))
+
+	mockedRows := sqlmock.NewRows([]string{"id", "title", "done", "project_id"}).
+		AddRow(taskId, title, done, projectId)
+
+	s.mock.ExpectQuery(regexp.QuoteMeta(`SELECT * FROM "tasks" WHERE (project_id = $1)`)).
+		WithArgs(int64(1)).
+		WillReturnRows(mockedRows)
+
+	mockedRows = sqlmock.NewRows([]string{"id", "todo", "task_id", "done"}).
+		AddRow(todoId, content, taskId, done)
+
+	s.mock.ExpectQuery(regexp.QuoteMeta(
+		`SELECT * FROM "todos" WHERE (task_id = $1)`)).
+		WithArgs(int64(2)).
+		WillReturnRows(mockedRows)
+
+	//s.mock.ExpectBegin()
+	//s.mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "projects" WHERE "projects"."id" = $1`)).
+	//	WithArgs(int64(1)).
+	//	WillReturnResult(sqlmock.NewResult(1, 1))
+	//s.mock.ExpectCommit()
+
+	s.mock.ExpectBegin()
+	s.mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "todos" WHERE "todos"."id" = $1`)).
+		WithArgs(int64(1)).
+		WillReturnResult(sqlmock.NewResult(1,1))
+	s.mock.ExpectCommit()
+
+	s.mock.ExpectBegin()
+	s.mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "tasks" WHERE "tasks"."id" = $1`)).
+		WithArgs(int64(2)).
+		WillReturnResult(sqlmock.NewResult(1,1))
+	s.mock.ExpectCommit()
+
+	s.mock.ExpectBegin()
+	s.mock.ExpectExec(regexp.QuoteMeta(`DELETE FROM "projects" WHERE "projects"."id" = $1`)).
+		WithArgs(int64(1)).
+		WillReturnResult(sqlmock.NewResult(1,1))
+	s.mock.ExpectCommit()
+
+
+	err := s.repository.DeleteById(projectId)
+	require.NoError(s.T(), err)
+}
+
+
