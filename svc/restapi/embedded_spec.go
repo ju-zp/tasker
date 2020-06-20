@@ -135,6 +135,24 @@ func init() {
             }
           }
         }
+      },
+      "delete": {
+        "description": "deletes a Project and all associated tasks and todos",
+        "operationId": "deleteProject",
+        "parameters": [
+          {
+            "$ref": "#/parameters/path_projectId"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully deleted",
+            "schema": {
+              "description": "success",
+              "type": "string"
+            }
+          }
+        }
       }
     },
     "/task": {
@@ -561,6 +579,28 @@ func init() {
                   }
                 }
               }
+            }
+          }
+        }
+      },
+      "delete": {
+        "description": "deletes a Project and all associated tasks and todos",
+        "operationId": "deleteProject",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "ID of a project",
+            "name": "projectId",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "successfully deleted",
+            "schema": {
+              "description": "success",
+              "type": "string"
             }
           }
         }

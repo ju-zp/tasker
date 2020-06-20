@@ -171,6 +171,17 @@ paths:
                 type: array
                 items:
                   $ref: "#/definitions/taskTodos"
+    delete:
+      operationId: deleteProject
+      description: deletes a Project and all associated tasks and todos
+      parameters:
+        - $ref: "#/parameters/path_projectId"
+      responses:
+        200:
+          description: successfully deleted
+          schema:
+            type: string
+            description: success
   /task:
     get:
       operationId: getTasks

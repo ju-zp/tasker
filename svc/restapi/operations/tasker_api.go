@@ -50,6 +50,9 @@ func NewTaskerAPI(spec *loads.Document) *TaskerAPI {
 		CreateTaskTodoHandler: CreateTaskTodoHandlerFunc(func(params CreateTaskTodoParams) middleware.Responder {
 			return middleware.NotImplemented("operation CreateTaskTodo has not yet been implemented")
 		}),
+		DeleteProjectHandler: DeleteProjectHandlerFunc(func(params DeleteProjectParams) middleware.Responder {
+			return middleware.NotImplemented("operation DeleteProject has not yet been implemented")
+		}),
 		DeleteTaskHandler: DeleteTaskHandlerFunc(func(params DeleteTaskParams) middleware.Responder {
 			return middleware.NotImplemented("operation DeleteTask has not yet been implemented")
 		}),
@@ -113,6 +116,8 @@ type TaskerAPI struct {
 	CreateTaskHandler CreateTaskHandler
 	// CreateTaskTodoHandler sets the operation handler for the create task todo operation
 	CreateTaskTodoHandler CreateTaskTodoHandler
+	// DeleteProjectHandler sets the operation handler for the delete project operation
+	DeleteProjectHandler DeleteProjectHandler
 	// DeleteTaskHandler sets the operation handler for the delete task operation
 	DeleteTaskHandler DeleteTaskHandler
 	// DeleteTodoHandler sets the operation handler for the delete todo operation
@@ -203,6 +208,9 @@ func (o *TaskerAPI) Validate() error {
 	}
 	if o.CreateTaskTodoHandler == nil {
 		unregistered = append(unregistered, "CreateTaskTodoHandler")
+	}
+	if o.DeleteProjectHandler == nil {
+		unregistered = append(unregistered, "DeleteProjectHandler")
 	}
 	if o.DeleteTaskHandler == nil {
 		unregistered = append(unregistered, "DeleteTaskHandler")
@@ -328,6 +336,10 @@ func (o *TaskerAPI) initHandlerCache() {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
 	o.handlers["POST"]["/task/{taskId}/todo"] = NewCreateTaskTodo(o.context, o.CreateTaskTodoHandler)
+	if o.handlers["DELETE"] == nil {
+		o.handlers["DELETE"] = make(map[string]http.Handler)
+	}
+	o.handlers["DELETE"]["/project/{projectId}"] = NewDeleteProject(o.context, o.DeleteProjectHandler)
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}

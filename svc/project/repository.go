@@ -65,6 +65,30 @@ func (r *Repository) FindByID(id string) (project *models.Project, taskTodos []*
 	return project, taskTodos, nil
 }
 
+func (r *Repository) DeleteById(id string) error {
+	project, err := r.Find(id)
+	if err != nil {
+		fmt.Println("error finding project")
+	}
+
+	taskRepository := task.CreateRepository(r.DB)
+
+	tasks, err := taskRepository.FindByProjectId(project.ID)
+	if err != nil {
+		fmt.Println("error finding tasks")
+	}
+
+	if len(tasks) > 0 {
+		for _, task := range tasks {
+			err = taskRepository.Delete(string(task.ID))
+		}
+	}
+
+	err = r.DB.Delete(&project).Error
+
+	return err
+}
+
 func CreateRepository(db *gorm.DB) *Repository {
 	return &Repository{
 		DB: db,

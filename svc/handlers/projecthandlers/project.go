@@ -44,3 +44,13 @@ func (ctx *Context)GetProject(params operations.GetProjectParams) middleware.Res
 		Tasks:   taskTodos,
 	})
 }
+
+// DeleteProject deletes the project and it's associated tasks and todos
+func (ctx *Context)DeleteProject(params operations.DeleteProjectParams) middleware.Responder {
+	err := ctx.Repository.DeleteById(params.ProjectID)
+	if err != nil {
+		return nil
+	}
+
+	return operations.NewDeleteProjectOK()
+}
