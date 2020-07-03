@@ -18,7 +18,8 @@ import (
 type Task struct {
 
 	// done
-	Done bool `json:"done,omitempty"`
+	// Required: true
+	Done *bool `json:"done"`
 
 	// id
 	// Read Only: true
@@ -36,6 +37,10 @@ type Task struct {
 func (m *Task) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateDone(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateTitle(formats); err != nil {
 		res = append(res, err)
 	}
@@ -43,6 +48,15 @@ func (m *Task) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *Task) validateDone(formats strfmt.Registry) error {
+
+	if err := validate.Required("done", "body", m.Done); err != nil {
+		return err
+	}
+
 	return nil
 }
 

@@ -374,7 +374,8 @@ func init() {
     "task": {
       "type": "object",
       "required": [
-        "title"
+        "title",
+        "done"
       ],
       "properties": {
         "done": {
@@ -859,7 +860,8 @@ func init() {
     "task": {
       "type": "object",
       "required": [
-        "title"
+        "title",
+        "done"
       ],
       "properties": {
         "done": {

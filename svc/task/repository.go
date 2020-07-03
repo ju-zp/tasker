@@ -1,6 +1,7 @@
 package task
 
 import (
+	"github.com/go-openapi/swag"
 	"github.com/jinzhu/gorm"
 	"github.com/ju-zp/tasker/svc/models"
 	"github.com/ju-zp/tasker/svc/todo"
@@ -12,7 +13,7 @@ type Repository struct {
 
 func (r *Repository) Create(title *string, projectId int64) (*models.Task, error) {
 	task := models.Task{
-		Done:      false,
+		Done:      swag.Bool(false),
 		ProjectID: projectId,
 		Title:     title,
 	}
