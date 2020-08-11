@@ -1,3 +1,6 @@
 .important
 .env
 .idea
+
+./svc/services
+./integration/services
