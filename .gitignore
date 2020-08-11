@@ -3,4 +3,4 @@
 .idea
 
 ./svc/services
-./integration/services
+integration/services
