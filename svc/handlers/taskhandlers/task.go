@@ -3,14 +3,14 @@ package taskhandlers
 import (
 	"fmt"
 	"github.com/go-openapi/swag"
-	"github.com/ju-zp/tasker/svc/models"
+	"github.com/ju-zp/tasker/svc/services/tasker/models"
 	"github.com/ju-zp/tasker/svc/task"
 	"github.com/ju-zp/tasker/svc/todo"
 	"strconv"
 
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/jinzhu/gorm"
-	"github.com/ju-zp/tasker/svc/restapi/operations"
+	"github.com/ju-zp/tasker/svc/services/tasker/restapi/operations"
 )
 
 // Context for task handlers

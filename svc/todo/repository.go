@@ -2,7 +2,7 @@ package todo
 
 import (
 	"github.com/jinzhu/gorm"
-	"github.com/ju-zp/tasker/svc/models"
+	"github.com/ju-zp/tasker/svc/services/tasker/models"
 )
 
 type Repository struct {

@@ -3,7 +3,7 @@ package task
 import (
 	"github.com/go-openapi/swag"
 	"github.com/jinzhu/gorm"
-	"github.com/ju-zp/tasker/svc/models"
+	"github.com/ju-zp/tasker/svc/services/tasker/models"
 	"github.com/ju-zp/tasker/svc/todo"
 )
 

@@ -3,7 +3,7 @@ package todohandlers
 import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/go-openapi/swag"
-	"github.com/ju-zp/tasker/svc/restapi/operations"
+	"github.com/ju-zp/tasker/svc/services/tasker/restapi/operations"
 	"github.com/ju-zp/tasker/svc/todo"
 )
 

@@ -3,7 +3,7 @@ package project
 import (
 	"fmt"
 	"github.com/jinzhu/gorm"
-	"github.com/ju-zp/tasker/svc/models"
+	"github.com/ju-zp/tasker/svc/services/tasker/models"
 	"github.com/ju-zp/tasker/svc/task"
 	"github.com/ju-zp/tasker/svc/todo"
 )

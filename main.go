@@ -18,8 +18,8 @@ import (
 	"github.com/go-openapi/loads"
 	"github.com/joho/godotenv"
 	"github.com/ju-zp/tasker/svc/handlers/pinghandlers"
-	"github.com/ju-zp/tasker/svc/restapi"
-	"github.com/ju-zp/tasker/svc/restapi/operations"
+	"github.com/ju-zp/tasker/svc/services/tasker/restapi"
+	"github.com/ju-zp/tasker/svc/services/tasker/restapi/operations"
 )
 
 func init() {

@@ -2,7 +2,7 @@ package pinghandlers
 
 import (
 	"github.com/go-openapi/runtime/middleware"
-	"github.com/ju-zp/tasker/svc/restapi/operations"
+	"github.com/ju-zp/tasker/svc/services/tasker/restapi/operations"
 )
 
 // GetPing returns the status of the server

@@ -28,3 +28,6 @@ swagger:
 
 test:
 	go test -v ./...
+
+db:
+	docker-compose -f docker-compose.yml exec postgres /bin/bash -U postgres -h postgres

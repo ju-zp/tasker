@@ -4,7 +4,7 @@ import (
 	"github.com/go-openapi/runtime/middleware"
 	"github.com/jinzhu/gorm"
 	"github.com/ju-zp/tasker/svc/project"
-	"github.com/ju-zp/tasker/svc/restapi/operations"
+	"github.com/ju-zp/tasker/svc/services/tasker/restapi/operations"
 )
 
 type Context struct {
