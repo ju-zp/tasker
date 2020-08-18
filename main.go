@@ -11,9 +11,9 @@ import (
 
 	"github.com/ju-zp/tasker/svc/database"
 
+	"github.com/ju-zp/tasker/svc/handlers/projecthandlers"
 	"github.com/ju-zp/tasker/svc/handlers/taskhandlers"
 	"github.com/ju-zp/tasker/svc/handlers/todohandlers"
-	"github.com/ju-zp/tasker/svc/handlers/projecthandlers"
 
 	"github.com/go-openapi/loads"
 	"github.com/joho/godotenv"

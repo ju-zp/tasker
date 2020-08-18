@@ -2,7 +2,7 @@ FROM golang:1.13-alpine
 
 RUN apk update && apk add --no-cache git
 
-WORKDIR /app
+WORKDIR /go/src/github.com/ju-zp/tasker
 
 COPY go.mod go.sum ./
 

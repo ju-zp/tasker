@@ -5,7 +5,7 @@ SERVICE_DIR = svc/services
 
 SWAGGER_VERSION = 0.25.0
 
-SWAGGER = /usr/local/bin/swagger-v0.25.0
+SWAGGER = /usr/local/bin/swagger-v$(SWAGGER_VERSION)
 
 build:                       
 	rm -rf bin                        
@@ -29,5 +29,7 @@ swagger:
 test:
 	go test -v ./...
 
+it-test:
+	go test -v ./integration/...
 db:
 	docker-compose -f docker-compose.yml exec postgres /bin/bash -U postgres -h postgres

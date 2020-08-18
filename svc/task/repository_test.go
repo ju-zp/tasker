@@ -3,9 +3,10 @@ package task
 import (
 	"database/sql"
 	"github.com/DATA-DOG/go-sqlmock"
+	"github.com/go-openapi/swag"
 	"github.com/go-test/deep"
 	"github.com/jinzhu/gorm"
-	"github.com/ju-zp/tasker/svc/models"
+	"github.com/ju-zp/tasker/svc/services/tasker/models"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
 	"regexp"
@@ -66,7 +67,7 @@ func (s *Suite )Test_Create() {
 	res, err := s.repository.Create(&title, projectId)
 
 	require.NoError(s.T(), err)
-	require.Nil(s.T(), deep.Equal(&models.Task{ID: 1, Title: &title, ProjectID: projectId, Done: done}, res))
+	require.Nil(s.T(), deep.Equal(&models.Task{ID: 1, Title: &title, ProjectID: projectId, Done: &done}, res))
 }
 
 func (s *Suite) Test_Find() {
@@ -87,7 +88,7 @@ func (s *Suite) Test_Find() {
 	res, err := s.repository.Find(id)
 
 	require.NoError(s.T(), err)
-	require.Nil(s.T(), deep.Equal(&models.Task{ID: 1, Title: &title, ProjectID: projectId, Done: done}, res))
+	require.Nil(s.T(), deep.Equal(&models.Task{ID: 1, Title: &title, ProjectID: projectId, Done: &done}, res))
 }
 
 func (s *Suite) Test_FindByProjectId() {
@@ -114,15 +115,15 @@ func (s *Suite) Test_FindByProjectId() {
 	res, err := s.repository.FindByProjectId(projectId)
 
 	require.NoError(s.T(), err)
-	require.Nil(s.T(), deep.Equal(&models.Task{ID: 1, Title: &title, ProjectID: projectId, Done: done}, res[0]))
-	require.Nil(s.T(), deep.Equal(&models.Task{ID: 2, Title: &title2, ProjectID: projectId, Done: done}, res[1]))
-	require.Nil(s.T(), deep.Equal(&models.Task{ID: 3, Title: &title3, ProjectID: projectId, Done: done}, res[2]))
+	require.Nil(s.T(), deep.Equal(&models.Task{ID: 1, Title: &title, ProjectID: projectId, Done: &done}, res[0]))
+	require.Nil(s.T(), deep.Equal(&models.Task{ID: 2, Title: &title2, ProjectID: projectId, Done: &done}, res[1]))
+	require.Nil(s.T(), deep.Equal(&models.Task{ID: 3, Title: &title3, ProjectID: projectId, Done: &done}, res[2]))
 }
 
 func (s *Suite) Test_DeleteByTask() {
 	title := "test-title"
 	task := &models.Task{
-		Done:      false,
+		Done:      swag.Bool(false),
 		ID:        1,
 		ProjectID: 2,
 		Title:     &title,

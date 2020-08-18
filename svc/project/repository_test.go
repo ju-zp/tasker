@@ -5,7 +5,7 @@ import (
 	"github.com/DATA-DOG/go-sqlmock"
 	"github.com/go-test/deep"
 	"github.com/jinzhu/gorm"
-	"github.com/ju-zp/tasker/svc/models"
+	"github.com/ju-zp/tasker/svc/services/tasker/models"
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/require"
 	"github.com/stretchr/testify/suite"
@@ -145,7 +145,7 @@ func (s *Suite) Test_FindByID() {
 	require.Nil(s.T(), deep.Equal(&models.Project{ID: 1, Title: &title, Description: &description}, project))
 
 	assert.Len(s.T(), taskTodos, 1)
-	require.Nil(s.T(), deep.Equal(&models.Task{ID: 2, Title: &title, ProjectID: 1, Done: done}, taskTodos[0].Task))
+	require.Nil(s.T(), deep.Equal(&models.Task{ID: 2, Title: &title, ProjectID: 1, Done: &done}, taskTodos[0].Task))
 
 	assert.Len(s.T(), taskTodos[0].Todos, 1)
 	require.Nil(s.T(), deep.Equal(&models.Todo{ID: 1, Todo: &content, TaskID: 2, Done: &done}, taskTodos[0].Todos[0]))

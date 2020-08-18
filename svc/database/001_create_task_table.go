@@ -1,7 +1,7 @@
 package database
 
 import (
-	"github.com/ju-zp/tasker/svc/models"
+	"github.com/ju-zp/tasker/svc/services/tasker/models"
 )
 
 func (database Database)CreateTaskTable() {
